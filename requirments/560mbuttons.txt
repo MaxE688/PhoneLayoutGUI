@@ -1,0 +1,39 @@
+expmod1 key1 type: blf
+expmod1 key1 label: AdminAsst 6722
+expmod1 key1 value: 6722
+ 
+expmod1 key2 type: blf
+expmod1 key2 label: Building 6720
+expmod1 key2 value: 6720
+
+expmod1 key3 type: blf
+expmod1 key3 label: DepTreasure 6723
+expmod1 key3 value: 6723
+
+expmod1 key4 type: blf
+expmod1 key4 label: DepClerk 6725
+expmod1 key4 value: 6725
+
+expmod1 key5 type: blf
+expmod1 key5 label: Assessor 6736
+expmod1 key5 value: 6736
+
+expmod1 key6 type: blf
+expmod1 key6 label: Zoning 6729
+expmod1 key6 value: 6729
+
+expmod1 key7 type: blf
+expmod1 key7 label: Fire 6724
+expmod1 key7 value: 6724
+
+expmod1 key8 type: blf
+expmod1 key8 label: Treasurer 6721
+expmod1 key8 value: 6721
+
+expmod1 key9 type: blf
+expmod1 key9 label: Clerk 6726
+expmod1 key9 value: 6726
+
+expmod1 key10 type: blf
+expmod1 key10 label: FireLoft 6730
+expmod1 key10 value: 6730
