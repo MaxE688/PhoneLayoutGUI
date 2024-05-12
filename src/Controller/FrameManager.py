@@ -46,9 +46,11 @@ class FrameManager:
     def mainFrame(self, cfg):
         self.cfg = cfg
         self.root = self.createWindow(self.cfgFrame)
+        # self.root.center()
 
         self.tfm = TileFrameManager(self, self.root, self.model, self.cfg)
         self.tfm.create()
+        self.root.title(self.tfm.title)
         self.root.createMenu(self)
         self.root.center()
 
@@ -59,6 +61,7 @@ class FrameManager:
         self.brand = phoneModels[model]['brand']
 
         self.root = self.createWindow(frame)
+        # self.root.center()
         # self.root.setSize(500,800)
         self.cfgFrame = ConfigFrame(self)
         self.root.title(self.cfgFrame.title)
@@ -67,6 +70,7 @@ class FrameManager:
     def selectModelFrame(self, frame):
 
         self.root = self.createWindow(frame)
+        # self.root.center()
 
         # self.root.setSize(SELECT_MODEL_FRAME_WIDTH, SELECT_MODEL_FRAME_HEIGHT)
         self.msFrame =  ModelSelectFrame(self)
@@ -80,6 +84,7 @@ class FrameManager:
         if self.root != None:
             self.root.destroy()
         root = Root()
+        # root.center()
 
         return root
 

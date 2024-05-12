@@ -55,11 +55,9 @@ class EditTileManager:
                 60:"Emergency",
                 61:"Directory",
                }
-
-
-
-
-        editFrame = EditTileFrame(self)
+        self.editFrame = EditTileFrame(self)
+        self.editFrame.center()
+        
 
     def getTypeOpts(self):
         if self.brand == "Astra":

@@ -14,6 +14,7 @@ class TileFrameManager:
         self.root = root
         self.model = model
         self.currentPage = 0
+        self.title = "Button Page: " + self.model
 
         parsedConfig = InitTileConfig(phoneModels[model]['brand'], cfg)
         configTiles = parsedConfig.getTiles()
@@ -46,6 +47,14 @@ class TileFrameManager:
             self.makePages6737(configTiles, tilesPerPage)
         else:
             self.makePages(configTiles, tilesPerPage)
+
+
+
+
+
+
+
+
 
 
     def makePages6737(self, configTiles, tilesPerPage):
@@ -93,6 +102,19 @@ class TileFrameManager:
                 print(tile.id)
         print()
 
+
+
+
+
+
+    # currently takes full list of tiles, and divides them into individual pages
+    # when a change occurs to one of the pages, the tiles are trying to adjust
+    # based on their current page.
+
+    # Consider managing the full list here, and when a tile is moved/deleted/created
+    # delete all current pages, and recreate them with this function
+
+
     def makePages(self, cTiles, tilesPerPage):
         x = 0
         for i in range(self.pageCount):
@@ -105,6 +127,41 @@ class TileFrameManager:
             page.makeEditable()
             self.tilePageFrames.append(page)
             x += tilesPerPage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def create(self):
         print("Creating Tile Frame")
@@ -151,7 +208,7 @@ class TileFrameManager:
 
     def toNextPage(self, page, tile):
         nPage = (self.tilePageFrames.index(page) + 1) % len(self.tilePageFrames)
-        if self.isSecondPage(page):
+        if self.isSecondPageLast(page):
             copyTile = page.layoutManger.copyTile(self.tilePageFrames[0], page.tiles[0])
             self.tilePageFrames[nPage].tiles.append(copyTile)
             return None
@@ -161,7 +218,7 @@ class TileFrameManager:
 
     def toPrevPage(self, page, tile):
         pPage = (self.tilePageFrames.index(page) - 1) % len(self.tilePageFrames)
-        if self.isSecondPage(page):
+        if self.isSecondPageLast(page):
             copyTile = page.layoutManager.copyTile(self.tilePageFrames[0], page.tiles[0])
             self.tilePageFrames[pPage].tiles.append(copyTile)
             return None
@@ -170,7 +227,7 @@ class TileFrameManager:
             return swappedTile
 
 
-    def isSecondPage(self, page):
+    def isSecondPageLast(self, page):
         if self.pageCount == 2 and page == self.tilePageFrames[-1]:
             if len(page.tiles) == 1:
                 return True

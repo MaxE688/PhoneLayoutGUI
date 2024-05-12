@@ -22,12 +22,14 @@ class ModelSelectFrame(ttk.Frame):
         label1 = tk.Label(self, text = "Please select the model of phone:")
         label1.grid(column = 1, row = 0, columnspan = 2)
 
-        dropOptions = phoneModels.keys()
-
+        # dropOptions = phoneModels.keys()
+        dropOptions = list(phoneModels)
 
         self.clicked = tk.StringVar()
-        self.clicked.set("Astra 6737i")
+        # self.clicked.set("Astra 6737i")
+        self.clicked.set(dropOptions[0])
 
+        # dropMenu = tk.OptionMenu(self, self.clicked, *dropOptions)
         dropMenu = tk.OptionMenu(self, self.clicked, *dropOptions)
         dropMenu.grid(column = 1, row = 1, columnspan = 2)
 

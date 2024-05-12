@@ -43,7 +43,9 @@ class ModelFrame(ttk.Frame):
         self.layoutManager.redraw(self)
 
     def editTile(self, tile):
-        EditTileManager(self, tile)
+        etm = EditTileManager(self, tile)
+        # etm.editFrame.center()
+
 
 
     def drag(self, widget, x, y):
@@ -82,6 +84,8 @@ class ModelFrame(ttk.Frame):
 
                     if len(self.tiles) == 0:
                         self.frameManager.deletePage(self)
+                    elif self.frameManager.pageCount == 2 & len(self.tiles) == 1:
+                        pass
 
                     elif self.frameManager.pageCount > 1:
                         # subList = self.frameManager.tilePageFrames

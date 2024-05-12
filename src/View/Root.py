@@ -8,6 +8,7 @@ from tkinter import ttk
 class Root(tk.Tk):
     def __init__(self):
         super().__init__()
+        # self.center()
 
     def center(self):
         self.update()
@@ -27,6 +28,7 @@ class Root(tk.Tk):
 
         center = '+' + str(x) + '+' + str(y)
         self.geometry(center)
+        print('I am called from ROOT.CENTER')
 
     def createMenu(self, fm):
 
