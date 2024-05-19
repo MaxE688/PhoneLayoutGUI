@@ -12,11 +12,14 @@ import tkinter as tk
 
 class EditTileFrame(tk.Toplevel):
 
-    def __init__(self, editManager):
+    # def __init__(self, editManager):
+    def __init__(self, pageTile, options, currentOptions):
         super().__init__()
-        self.root = editManager.tfManager.root
-        self.editManager = editManager
-        self.tile = editManager.tile
+        self.root = pageTile.winfo_toplevel()
+        self.tile = pageTile.tile
+        # self.root = editManager.tfManager.root
+        # self.editManager = editManager
+        # self.tile = editManager.tile
 
 
         # self.subRoot = tk.Toplevel(self.root)
@@ -29,21 +32,22 @@ class EditTileFrame(tk.Toplevel):
         # lineLabel = tk.Label(self.subRoot, text = "Line: ")
         # valueLabel = tk.Label(self.subRoot, text = "Value: ")
         # labelLabel = tk.Label(self.subRoot, text = "Label: ")
-        typeLabel = tk.Label(self, text = "Button Type: ")
-        lineLabel = tk.Label(self, text = "Line: ")
-        valueLabel = tk.Label(self, text = "Value: ")
-        labelLabel = tk.Label(self, text = "Label: ")
+        self.typeLabel = tk.Label(self, text = "Button Type: ")
+        self.lineLabel = tk.Label(self, text = "Line: ")
+        self.valueLabel = tk.Label(self, text = "Value: ")
+        self.labelLabel = tk.Label(self, text = "Label: ")
 
         # editManager = TileData(tile, tfManager.model)
-        dropOptions = self.editManager.getTypeOpts()
+        # dropOptions = self.editManager.getTypeOpts()
 
         self.clicked = tk.StringVar()
-        self.clicked.set(self.editManager.getCurrOpt())
+        self.clicked.set(currentOptions)
 
         # typeDropMenu = tk.OptionMenu(self.subRoot, self.clicked, *dropOptions)
-        typeDropMenu = tk.OptionMenu(self, self.clicked, *dropOptions)
+        # typeDropMenu = tk.OptionMenu(self, self.clicked, *dropOptions)
+        self.typeDropMenu = tk.OptionMenu(self, self.clicked, *options)
 
-
+        
         lineVal = tk.StringVar()
         # self.lineBox = tk.Spinbox(self.subRoot, textvariable = lineVal, from_ = 1, to = 25)
         self.lineBox = tk.Spinbox(self, textvariable = lineVal, from_ = 1, to = 25)
@@ -57,31 +61,66 @@ class EditTileFrame(tk.Toplevel):
         self.valueEntry.insert(0, str(self.tile.value))
         self.labelEntry.insert(0, str(self.tile.label))
 
-        # submitBtn = tk.Button(self.subRoot, text = "Submit")
-        submitBtn = tk.Button(self, text = "Submit")
-        submitBtn['command'] = self.submit
+        # self.submitBtn = submitBtn
+        # self.cancelBtn = cancelBtn
 
-        # cancelBtn = tk.Button(self.subRoot, text = "Cancel")
-        cancelBtn = tk.Button(self, text = "Cancel")
-        cancelBtn['command'] = self.cancel
+        # # submitBtn = tk.Button(self.subRoot, text = "Submit")
+        # submitBtn = tk.Button(self, text = "Submit")
+        # submitBtn['command'] = self.submit
+
+        # # cancelBtn = tk.Button(self.subRoot, text = "Cancel")
+        # cancelBtn = tk.Button(self, text = "Cancel")
+        # cancelBtn['command'] = self.cancel
 
 
-        typeLabel.pack()
-        typeDropMenu.pack()
+        # typeLabel.pack()
+        # typeDropMenu.pack()
 
-        lineLabel.pack()
-        self.lineBox.pack()
+        # lineLabel.pack()
+        # self.lineBox.pack()
 
-        valueLabel.pack()
-        self.valueEntry.pack()
+        # valueLabel.pack()
+        # self.valueEntry.pack()
 
-        labelLabel.pack()
-        self.labelEntry.pack()
+        # labelLabel.pack()
+        # self.labelEntry.pack()
 
-        submitBtn.pack()
-        cancelBtn.pack()
+        # submitBtn.pack()
+        # cancelBtn.pack()
         # self.mainloop()
 
+    def setButtons(self, submit, cancel):
+        self.submitBtn = submit
+        self.cancelBtn = cancel
+
+    def getClicked(self):
+        return self.clicked.get()
+    
+    def getLineBox(self):
+        return self.lineBox.get()
+    
+    def getValueEntry(self):
+        return self.valueEntry.get()
+    
+    def getLabelEntry(self):
+        return self.labelEntry.get()
+
+
+    def draw(self):
+        self.typeLabel.pack()
+        self.typeDropMenu.pack()
+
+        self.lineLabel.pack()
+        self.lineBox.pack()
+
+        self.valueLabel.pack()
+        self.valueEntry.pack()
+
+        self.labelLabel.pack()
+        self.labelEntry.pack()
+
+        self.submitBtn.pack()
+        self.cancelBtn.pack()
 
 
     def center(self):
@@ -114,18 +153,19 @@ class EditTileFrame(tk.Toplevel):
         self.geometry(center)
 
 
-    def submit(self):
-        self.editManager.updateTile(
-                                    self.clicked.get(),
-                                    self.lineBox.get(),
-                                    self.valueEntry.get(),
-                                    self.labelEntry.get()
-                                )
+    # def submit(self):
+    #     self.editManager.updateTile(
+    #                                 self.clicked.get(),
+    #                                 self.lineBox.get(),
+    #                                 self.valueEntry.get(),
+    #                                 self.labelEntry.get()
+    #                             )
+    #     # self.tile.i
 
-        # self.subRoot.destroy()
-        self.destroy()
+    #     # self.subRoot.destroy()
+    #     self.destroy()
 
-    def cancel(self):
-        # self.subRoot.destroy()
-        self.destroy()
+    # def cancel(self):
+    #     # self.subRoot.destroy()
+    #     self.destroy()
 

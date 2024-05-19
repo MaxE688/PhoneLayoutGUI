@@ -16,6 +16,17 @@ class MouseManager:
         tile.bind("<ButtonRelease-1>", self.onDrop)
         tile.configure(cursor="hand1")
 
+
+
+    def addEditable(self, tile):
+        tile.bind("<Double-1>", self.edit)
+
+    def edit(self, event):
+        self.pageLayout.editTile(event.widget)
+        print("Edit me!")
+
+
+
     def onStart(self, event):
         print("button press")
         widget = event.widget
@@ -69,9 +80,3 @@ class MouseManager:
         self.pageLayout.drop(widget, x, y, self.startCol, self.startRow)
 
 
-    def addEditable(self, tile):
-        tile.bind("<Double-1>", self.edit)
-
-    def edit(self, event):
-        self.pageLayout.editTile(event.widget)
-        print("Edit me!")

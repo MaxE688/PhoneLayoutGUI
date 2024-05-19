@@ -10,7 +10,7 @@ class PageFrameManager:
         self.listManager = listManager
         self.containerFrame = ttk.Frame(root)
         self.pageLayout = PageLayout(self.containerFrame, model, self.listManager)
-        # self.footerFrame = FooterFrame(self.containerFrame) 
+        self.footerFrame = FooterFrame(self.containerFrame, self.listManager, self.pageLayout) 
 
         self.containerFrame.pack()
 

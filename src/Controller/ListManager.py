@@ -2,6 +2,7 @@ import math
 from typing import List
 from Model.PageTile import PageTile
 from Model.constants import phoneModels
+from Model.Tile import Tile
 
 
 class ListManager:
@@ -31,18 +32,10 @@ class ListManager:
     tiles = []
     for i in range(self.getPageSize()):
       index = startIndex + i
-      if index > len(self.tiles):
+      if index >= len(self.tiles):
         break
       tiles.append(self.tiles[index])
     return tiles
-
-
-  def shiftTile(self, tileIndex, destinationIndex):
-    mTile = self.tiles.pop(tileIndex)
-    self.tiles.insert(destinationIndex, mTile)
-    for t in self.tiles:
-      print(self.tiles.index(t))
-
 
 
   def getPageCount(self):
@@ -56,9 +49,6 @@ class ListManager:
       
     # return 1
   
-
-
-
   def getPageSize(self):
     tileCount = len(self.tiles)
     if tileCount > self.tilesPerPage and self.model != "Astra 6737i":
@@ -84,13 +74,14 @@ class ListManager:
     return page
   
 
-
+  # Get the first PageTile on page containg tileIndex
   def getPageFirstTile(self, tileIndex):
     tilesPerPage = self.getPageSize()
     first = 0
-    for t in self.tiles:
-      index = self.tiles.index(t)
-      mod = index % tilesPerPage
+    for index, t in enumerate(self.tiles):
+    # for t in self.tiles:
+      # index = self.tiles.index(t)
+      mod = index % tilesPerPage 
 
       if mod == 0:
         first = index
@@ -100,14 +91,44 @@ class ListManager:
 
 
 
-  def addTile(self):
+  def shiftTile(self, tileIndex, destinationIndex):
+    mTile = self.tiles.pop(tileIndex)
+    self.tiles.insert(destinationIndex, mTile)
+    for t in self.tiles:
+      print(self.tiles.index(t))
+
+  def toNextPage(self, droppedIndex, lastIndex):
+    if lastIndex + 1 >= len(self.tiles):
+      dropped = self.tiles.pop(droppedIndex)
+      self.tiles.append(dropped)
+    else:
+      lastIndex += 1
+      self.shiftTile(droppedIndex, lastIndex)
+      # dropped = self.tiles.pop(droppedIndex)
+      # self.tiles.insert(lastIndex, dropped)
+
+  def toPrevPage(self, droppedIndex, insertIndex):
+    if insertIndex - 1 < 0:
+      self.shiftTile(droppedIndex, 0)
+    else:
+      self.shiftTile(droppedIndex, insertIndex - 1)
+
+      
+    
+  def deleteTile(self, tile):
+    self.tiles.remove(tile)
+
+  def addTile(self, tile):
+    # newTile = Tile()
+    self.tiles.append(tile)
     print("Add Tile!")
 
 
 
   def test(self):
     print("Testing testing...")
-
+    for t in self.tiles:
+      print(t.label)
 
 
 

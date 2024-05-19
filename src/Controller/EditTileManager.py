@@ -1,16 +1,19 @@
 
+import tkinter as tk
 import re
 from Model.constants import phoneModels
 from View.EditTileFrame import EditTileFrame
 
 class EditTileManager:
 
-    def __init__(self, frame, tile):
-        self.frame = frame
-        self.tfManager = frame.frameManager
-        self.tile = tile
-        self.model = frame.frameManager.model
-        self.brand = phoneModels[self.model]["brand"]
+    def __init__(self, layoutManager, model, tile):
+        # self.frame = frame
+        # self.tfManager = frame.frameManager
+        # self.model = frame.frameManager.model
+        self.layoutManager = layoutManager
+        self.pageTile = tile
+        self.tile = tile.tile
+        self.brand = phoneModels[model]["brand"]
         self.typeOptions = {
                 0:"NA",
                 1:"Conference",
@@ -55,8 +58,28 @@ class EditTileManager:
                 60:"Emergency",
                 61:"Directory",
                }
-        self.editFrame = EditTileFrame(self)
+        
+
+
+        options = self.getTypeOpts()
+        currentOptions = self.getCurrOpt()
+        self.editFrame = EditTileFrame(tile, options, currentOptions)
         self.editFrame.center()
+
+
+
+        # submitBtn = tk.Button(self.subRoot, text = "Submit")
+        submitBtn = tk.Button(self.editFrame, text = "Submit")
+        submitBtn['command'] = self.submit
+
+        # cancelBtn = tk.Button(self.subRoot, text = "Cancel")
+        cancelBtn = tk.Button(self.editFrame, text = "Cancel")
+        cancelBtn['command'] = self.cancel
+
+
+
+        self.editFrame.setButtons( submitBtn, cancelBtn )
+        self.editFrame.draw()
         
 
     def getTypeOpts(self):
@@ -101,9 +124,25 @@ class EditTileManager:
         self.tile.line = line
         self.tile.value = value
         self.tile.label = label
-        self.tile.tileText.set(label)
+        # self.tile.tileText.set(label)
 
+    def submit(self):
 
+        self.updateTile(
+            self.editFrame.getClicked(),
+            self.editFrame.getLineBox(),
+            self.editFrame.getValueEntry(),
+            self.editFrame.getLabelEntry()
+        )
+        # self.tile.i
+
+        # self.subRoot.destroy()
+        self.editFrame.destroy()
+        self.layoutManager.submitEdit(self.pageTile.index)
+
+    def cancel(self):
+        # self.subRoot.destroy()
+        self.editFrame.destroy()
 
     # def getKey(self, val):
     #      keyList = list(self.typeOptions.keys())

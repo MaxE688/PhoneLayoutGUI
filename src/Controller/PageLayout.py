@@ -9,6 +9,7 @@ from Model.EXP40 import EXP40
 from Model.constants import phoneModels
 from Controller.ListManager import ListManager
 from Model.PageTile import PageTile
+from Controller.EditTileManager import EditTileManager
 from View.PageFrame import PageFrame
 from Controller.MouseManager import MouseManager
 
@@ -17,6 +18,7 @@ class PageLayout:
         self.parent = tilePageContainerFrame
         self.model = model
         self.listManager = listManager
+        self.currentPage = 0
         tileLabels = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
         self.mouseManager = MouseManager(self)
         self.pageFrame = PageFrame(self.parent, self, self.mouseManager, tileLabels)
@@ -29,7 +31,7 @@ class PageLayout:
         self.prevPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nprev page', height = 4, width = 10)
         self.reservedLabel = tk.Label(  self.pageFrame, relief = tk.RAISED, text = 'Reserved', height = 4, width = 10)
         self.deleteTile = tk.Label(     self.pageFrame, relief = tk.RAISED, text = 'Delete Button', height  = 4, width = 10)
-        self.addTile = tk.Button(       self.pageFrame, text = 'Add Button', command = self.listManager.addTile)
+        self.addTile = tk.Button(       self.pageFrame, text = 'Add Button', command = self.addNewTile)
         self.printBtn = tk.Button(      self.pageFrame, text = "Print Children", command = self.listManager.test)
 
 
@@ -68,13 +70,15 @@ class PageLayout:
     def draw(self, tiles):
         self.modelLayout.draw(tiles, self.listManager.getPageCount())
 
-    def forget(self, page):
-        for child in page.winfo_children():
+    # def forget(self, page):
+    def forget(self):
+        # for child in page.winfo_children():
+        for child in self.pageFrame.winfo_children():
             child.grid_forget()
 
     def redraw(self, page: PageFrame, pageFirstIndex):
+        self.forget()
         # self.tilePage.forget(page)
-        # self.forget(page)
 
         # pageSize = self.listManager.getPageSize()
         # pageTiles = self.listManager.getPageTiles(pageFirstIndex, pageSize)
@@ -83,13 +87,14 @@ class PageLayout:
         #     tile.setParent(page)
 
         tiles = self.listManager.getPageTiles(pageFirstIndex)
-        page.updateLabels(pageFirstIndex, tiles)
+        # page.setTiles(tiles)
+        pageTiles = page.updateLabels(pageFirstIndex, tiles)
         # page.setTiles(pageTiles) #NEED: startIndex, pageSize
 
         if self.__class__.__name__ == 'A37':
             self.modelLayout.topkeys = self.modelLayout.getTopKeys(self)
             
-        self.modelLayout.draw(page.tiles, self.listManager.getPageCount())
+        self.modelLayout.draw(pageTiles, self.listManager.getPageCount())
 
 
 
@@ -98,6 +103,18 @@ class PageLayout:
 
 
 
+    def nextPage(self):
+        nextPageIndex = self.pageFrame.activeTiles[-1].index + 1
+        if nextPageIndex < len(self.listManager.tiles):
+            self.redraw(self.pageFrame, nextPageIndex)
+        pass
+
+    def prevPage(self):
+        prevPageIndex = self.pageFrame.activeTiles[0].index - 1
+        if prevPageIndex >= 0:
+            prevPageIndex = self.listManager.getPageFirstTile(prevPageIndex)
+            self.redraw(self.pageFrame, prevPageIndex)
+        pass
 
 
 
@@ -105,18 +122,31 @@ class PageLayout:
 
 
 
+    def addNewTile(self):
+        newTile = Tile(
+            "",
+            "16",
+            "1",
+            "",
+            "New Tile"
+        )
+        # newPageTile = PageTile()
+        # self.editTile(newTile)
+        self.listManager.addTile(newTile)
+        lastIndex = len(self.listManager.tiles) - 1
+        pageFirstTile = self.listManager.getPageFirstTile(lastIndex) 
+        self.redraw(self.pageFrame, pageFirstTile)
 
-
-
-    # def editTile(self, tile):
-    #     etm = EditTileManager(self, tile)
-    #     # etm.editFrame.center()
+    def editTile(self, tile):
+        EditTileManager(self, self.model, tile)
+        # etm.editFrame.center()
 
 
     def drag(self, widget, x, y):
         widget.place(x = x, y = y)
 
     def drop(self, dropped, x, y, col, row):
+        droppedIndex = dropped.index
         dropped.place_forget()
         crushed = self.pageFrame.winfo_containing(x, y)
         # crushed = dropped.parent.winfo_containing(x, y)
@@ -128,8 +158,39 @@ class PageLayout:
             
             # Removes dropped tile from list, inserts dropped tile into crushed tile's position
             self.listManager.shiftTile(dropped.index, crushed.index)
-            self.redraw(self.pageFrame, self.listManager.getPageFirstTile(crushed.index))
+            # self.redraw(self.pageFrame, self.listManager.getPageFirstTile(droppedIndex))
             
+        else:
+            match(crushed):
+                case self.nextPageTile:
+                    lastIndex = self.pageFrame.tiles[-1].index
+                    self.listManager.toNextPage(dropped.index, lastIndex)
+                    pass
+                case self.prevPageTile:
+                    firstIndex = self.pageFrame.tiles[0].index
+                    self.listManager.toPrevPage(dropped.index, firstIndex)
+                    pass
+                case self.deleteTile:
+                    # remove tile from list
+                    self.listManager.deleteTile(dropped)
+                    pass
+                case _:
+                    # Reset dropped tile to original position
+                    pass
+        self.redraw(self.pageFrame, self.listManager.getPageFirstTile(droppedIndex))
+
+
+
+
+
+
+
+
+
+    def submitEdit(self, pageTile):
+        self.redraw(self.pageFrame, self.listManager.getPageFirstTile(pageTile))
+
+
 
         # else:
         #     match(crushed):

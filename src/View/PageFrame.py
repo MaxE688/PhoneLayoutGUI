@@ -5,7 +5,7 @@
 import tkinter as tk
 from tkinter import ttk
 from Controller.MouseManager import MouseManager
-from Controller.EditTileManager import EditTileManager
+# from Controller.EditTileManager import EditTileManager
 # from Controller.PageLayout import PageLayout
 from Model.constants import phoneModels
 from Model.Tile import Tile
@@ -50,8 +50,15 @@ class PageFrame(ttk.Frame):
 
     # update: index, tile, label
     def updateLabels(self, firstIndex, tiles):
+        self.activeTiles = []
         for i, tile in enumerate(tiles):
             self.tiles[i].updateValues( firstIndex + i, tile, tile.label)
+            self.activeTiles.append(self.tiles[i])
+            # print(i)
+            # tile.updateValues(firstIndex + i, tile, tile.label)
+        return self.activeTiles
+
+
 
     def test(self):
         print("Tiles List: ")
