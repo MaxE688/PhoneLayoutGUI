@@ -88,11 +88,7 @@ class InitTileConfig:
 
     def parseMatch(self, btnGroups, idR, typeR, lineR, valueR, labelR):
 
-        # idR = re.compile("(?P<val>topsoftkey\d+)")
-        # typeR = re.compile("type: *(?P<type>\w+ *[^\st])")
-        # lineR = re.compile("line: *(?P<line>\d+)")
-        # labelR = re.compile("label: *(?P<label>\w+ *\w+)")
-        # valueR = re.compile("value: *(?P<value>.+)")
+        
         idNumR = re.compile("\d+")
 
         pID = 1

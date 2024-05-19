@@ -52,7 +52,7 @@ class ConfigFrame(ttk.Frame):
         if cfg == "":
             print("MessageBox(\"Cannot submit blank config.\")")
         else:
-            self.fm.mainFrame(cfg)
+            self.fm.initPhoneFrame(self, cfg)
 
     def cancel(self):
         print('Config Frame cancel')

@@ -1,9 +1,27 @@
 import tkinter as tk
 from tkinter import ttk
+from Controller.PageLayout import PageLayout
+from View.FooterFrame import FooterFrame
+from View.PageFrame import PageFrame
 
-class ParentModelFrame(ttk.Frame):
-    def __init__(self, parent):
-        super().__init__(parent)
+class PageFrameManager:
+    def __init__(self, root, model, listManager):
+        # super().__init__(parent)
+        self.listManager = listManager
+        self.containerFrame = ttk.Frame(root)
+        self.pageLayout = PageLayout(self.containerFrame, model, self.listManager)
+        # self.footerFrame = FooterFrame(self.containerFrame) 
+
+        self.containerFrame.pack()
+
+
+
+    # def getPage(self, pageNumb):
+    #     return PageFrame(self.model, )
+
+
+
+
 
 
     def create(self, pages):

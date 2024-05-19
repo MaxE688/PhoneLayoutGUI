@@ -47,15 +47,10 @@ class ModelSelectFrame(ttk.Frame):
         tk.Frame(self, height = 15, width = 100).grid(column = 0, row = 4)
         tk.Frame(self, width = 20).grid(column = 6, row = 4)
 
-        # width = self.winfo_width()
-        # height = self.winfo_height()
-        # fm.root.center()
 
     def submit(self):
-        # print('submit: ' + self.clicked.get())
-        # print(self.fm.msFrame.title)
         print(phoneModels[self.clicked.get()])
-        self.fm.configFrame(self, self.clicked.get())
+        self.fm.initConfigFrame(self, self.clicked.get())
 
     def cancel(self):
         print('cancel')

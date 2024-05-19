@@ -27,79 +27,40 @@ class FrameManager:
     def __init__(self):
         self.root = None
 
-    def generateResults(self, tileList):
-        print("GR here")
-        self.rg = ResultsGenerator(tileList, self.brand)
-
-        self.results = self.rg.getStrings()
-        self.resultsFrame()
-
-
-    def resultsFrame(self):
-        print("forget mainFrame")
-        self.tfm.forget()
-
-        self.resultFrame = ResultsFrame(self.root, self.results)
-
-
-    #ToDo Change name of this method
-    def mainFrame(self, cfg):
-        self.cfg = cfg
-        self.root = self.createWindow(self.cfgFrame)
-        # self.root.center()
-
-        self.tfm = TileFrameManager(self, self.root, self.model, self.cfg)
-        self.tfm.create()
-        self.root.title(self.tfm.title)
-        self.root.createMenu(self)
-        self.root.center()
-
-
-    def configFrame(self, frame, model):
-
-        self.model = model
-        self.brand = phoneModels[model]['brand']
-
+    def initModelSelectFrame(self, frame):
         self.root = self.createWindow(frame)
-        # self.root.center()
-        # self.root.setSize(500,800)
-        self.cfgFrame = ConfigFrame(self)
-        self.root.title(self.cfgFrame.title)
+        self.modelSelectFrame = ModelSelectFrame(self)
+        self.root.title(self.modelSelectFrame.title)
         self.root.center()
-
-    def selectModelFrame(self, frame):
-
-        self.root = self.createWindow(frame)
-        # self.root.center()
-
-        # self.root.setSize(SELECT_MODEL_FRAME_WIDTH, SELECT_MODEL_FRAME_HEIGHT)
-        self.msFrame =  ModelSelectFrame(self)
-        self.root.title(self.msFrame.title)
-        self.root.center()
-
 
     def createWindow(self, frame):
         if frame != None:
             frame.destroy()
         if self.root != None:
             self.root.destroy()
+        
         root = Root()
-        # root.center()
-
         return root
 
     def startLoop(self):
         self.root.mainloop()
 
-    # def getPhoneModels(self):
-    #     return phoneModels
+
+    def initConfigFrame(self, frame, model):
+
+        self.root = self.createWindow(frame)
+        self.model = model
+        self.brand = phoneModels[model]['brand']
+
+        self.configFrame = ConfigFrame(self)
+        self.root.title(self.configFrame.title)
+        self.root.center()
 
 
-
-
-
-
-
-# fm = FrameManager()
-# fm.selectModelFrame(None)
-# fm.startLoop()
+    def initPhoneFrame(self, frame, configText):
+        self.root = self.createWindow(frame)
+        self.config = configText
+        self.tileFrameManager = TileFrameManager(self)
+        self.root.title(self.tileFrameManager.title)
+        self.root.createMenu(self)
+        self.root.center()

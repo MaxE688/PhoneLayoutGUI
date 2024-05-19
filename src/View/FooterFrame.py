@@ -9,7 +9,7 @@ class FooterFrame(ttk.Frame):
         s = ttk.Style()
         s.configure('Foot.TFrame')
 
-        super().__init__(controller.root, style = 'Foot.TFrame')
+        super().__init__(controller, style = 'Foot.TFrame')
 
 
 
