@@ -1,7 +1,7 @@
 import sys
 import tkinter as tk
 
-from tkinter import ttk
+from tkinter import StringVar, ttk
 
 class FooterFrame(ttk.Frame):
     def __init__(self, container, listManager, pageLayout):
@@ -16,7 +16,9 @@ class FooterFrame(ttk.Frame):
 
         self.listManager = listManager
         self.pageLayout = pageLayout
-        label = str(self.pageLayout.currentPage + 1) + " / " + str(self.listManager.getPageCount()) 
+        l = str(self.pageLayout.currentPage + 1) + " / " + str(self.listManager.getPageCount()) 
+        self.label = StringVar()
+        self.label.set(l)
         # label = str(self.tileFM.currentPage) + " / " + str(self.tileFM.pageCount)
 
         self.pageControlFrame = tk.Frame(self)
@@ -26,11 +28,14 @@ class FooterFrame(ttk.Frame):
         self.cancelBtn = tk.Button(self.buttonFrame, text = "Cancel", command = self.quit)
         self.nextBtn = tk.Button(self.pageControlFrame, text = ">", command = self.nextPage)
         self.prevBtn = tk.Button(self.pageControlFrame, text = "<", command = self.prevPage)
-        self.pageLabel = tk.Label(self.pageControlFrame, text = label)
+        self.pageLabel = tk.Label(self.pageControlFrame, textvariable = self.label)
         self.create()
 
 
 
+    def setPageLabel(self, curr, total):
+        newLabel = str(curr) + " / " + str(total)
+        self.label.set(newLabel)
 
 
     def create(self):

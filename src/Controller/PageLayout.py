@@ -14,7 +14,8 @@ from View.PageFrame import PageFrame
 from Controller.MouseManager import MouseManager
 
 class PageLayout:
-    def __init__(self, tilePageContainerFrame, model, listManager:ListManager):
+    def __init__(self, pageFrameManager, tilePageContainerFrame, model, listManager:ListManager):
+        self.pageFrameManager = pageFrameManager
         self.parent = tilePageContainerFrame
         self.model = model
         self.listManager = listManager
@@ -85,7 +86,7 @@ class PageLayout:
         
         # for tile in pageTiles:
         #     tile.setParent(page)
-
+        self.pageFrameManager.updateLabel(self.listManager.getPageOfIndex(pageFirstIndex), self.listManager.getPageCount())
         tiles = self.listManager.getPageTiles(pageFirstIndex)
         # page.setTiles(tiles)
         pageTiles = page.updateLabels(pageFirstIndex, tiles)
@@ -183,7 +184,7 @@ class PageLayout:
 
 
 
-
+    # def g
 
 
 

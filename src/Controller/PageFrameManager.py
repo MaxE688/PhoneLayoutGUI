@@ -9,7 +9,7 @@ class PageFrameManager:
         # super().__init__(parent)
         self.listManager = listManager
         self.containerFrame = ttk.Frame(root)
-        self.pageLayout = PageLayout(self.containerFrame, model, self.listManager)
+        self.pageLayout = PageLayout(self, self.containerFrame, model, self.listManager)
         self.footerFrame = FooterFrame(self.containerFrame, self.listManager, self.pageLayout) 
 
         self.containerFrame.pack()
@@ -21,6 +21,8 @@ class PageFrameManager:
 
 
 
+    def updateLabel(self, currentPage, totalPages):
+        self.footerFrame.setPageLabel(currentPage, totalPages)
 
 
 
