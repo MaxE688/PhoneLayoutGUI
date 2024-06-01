@@ -11,16 +11,14 @@ class T48:
         self.numOfRows = 6
         #Columns -> [0-4]
 
-    def draw(self, tiles):
+        self.f = tk.Frame(parent, width=100)
+        self.f.grid(column = 2, row = 4)
+
+    def draw(self, tiles, pageCount):
         col = 0
         nextCol = 4
-
         for i, tile in enumerate(tiles):
-
             row = i % self.numOfRows
-
-
-
             if i >= self.numOfRows and i < self.numOfRows * 2:
                 tile.grid(column = 4, row = row)
                 # col = 0
@@ -33,7 +31,7 @@ class T48:
                 nextCol += 1
         #Put tiles in right spot
 
-        if(self.parent.frameManager.pageCount > 1):
+        if(pageCount > 1):
             self.layoutManager.reservedLabel.grid(column = 4, row = 5)
 
             # if
@@ -42,3 +40,4 @@ class T48:
             self.layoutManager.prevPageTile.grid(column = 1, row = 7, rowspan = 2)
         self.layoutManager.deleteTile.grid(column = 2, row = 7)
         self.layoutManager.addTile.grid(column = 2, row = 6)
+        self.f.grid(column = 2, row = 4, sticky = 'nesw')

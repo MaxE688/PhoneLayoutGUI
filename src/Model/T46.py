@@ -10,7 +10,10 @@ class T46:
         self.layoutManager = layoutManager
         self.numOfRows = 5
 
-    def draw(self, tiles):
+        self.f = tk.Frame(parent, width = 100)
+        self.f.grid(column = 2, row = 4)
+
+    def draw(self, tiles, pageCount):
 
         for i, tile in enumerate(tiles):
             row = i % self.numOfRows
@@ -21,9 +24,10 @@ class T46:
             tile.grid(column = col, row = row)
         #Put tiles in right spot
 
-        if(self.parent.frameManager.pageCount > 1):
-            self.layoutManager.reservedLabel.grid(column = 4, row = 4)
-            self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2)
-            self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)
+        if(pageCount > 1):
+            self.layoutManager.reservedLabel.grid(column = 4, row = 4, sticky = 'nesw')
+            self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2, sticky = 'w')
+            self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2, sticky = 'e')
         self.layoutManager.deleteTile.grid(column = 2, row = 3, columnspan = 2)
         self.layoutManager.addTile.grid(column = 2, row = 0, columnspan = 2)
+        self.f.grid(column = 2, row = 3, sticky = 'nesw')
