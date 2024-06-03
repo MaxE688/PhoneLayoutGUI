@@ -17,7 +17,6 @@ class PageTile(tk.Label):
                      )
       
       self.parent = parent
-      
       self.setLabel(self.tile.label)
          
    def setIndex(self, index):

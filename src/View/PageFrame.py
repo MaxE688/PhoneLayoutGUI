@@ -4,19 +4,18 @@
 """
 import tkinter as tk
 from tkinter import ttk
-from Controller.MouseManager import MouseManager
-# from Controller.EditTileManager import EditTileManager
-# from Controller.PageLayout import PageLayout
 from Model.constants import phoneModels
 from Model.Tile import Tile
+from Model.PageTile import PageTile
 
 class PageFrame(ttk.Frame):
 
-    def __init__(self, parent, pageLayout, mouseManager, pageTiles):
+    def __init__(self, parent, pageLayout, pageTiles):
         super().__init__(parent)
 
         # self.tiles is list[PageTile] (tileLabels)
         self.tiles = pageTiles
+        self.pageLayout = pageLayout
 
 
 
@@ -25,10 +24,11 @@ class PageFrame(ttk.Frame):
         # self.mouseManager = MouseManager(self, self.frameManager)
 
 
-        for t in pageTiles:
-            t.setParent(self)
-            mouseManager.addDraggable(t)
-            mouseManager.addEditable(t)
+        # for t in pageTiles:
+        #     pageLayout.pageTileSetup(self, t)
+            # t.setParent(self)
+            # mouseManager.addDraggable(t)
+            # mouseManager.addEditable(t)
 
         # self.layoutManager = PageLayout(self, parent, tiles)
         # pageLayout.draw(self.tiles)
@@ -52,8 +52,15 @@ class PageFrame(ttk.Frame):
     def updateLabels(self, firstIndex, tiles):
         self.activeTiles = []
         for i, tile in enumerate(tiles):
-            self.tiles[i].updateValues( firstIndex + i, tile, tile.label)
-            self.activeTiles.append(self.tiles[i])
+            if i >= len(self.tiles): 
+                updatedTile = PageTile(firstIndex + i, tile)
+                # self.pageLayout.pageTileSetup(self, updatedTile)
+                self.pageLayout.setMouseManager(self, updatedTile)
+                # updatedTile.setParent(self)
+            else:
+                self.tiles[i].updateValues( firstIndex + i, tile, tile.label)
+                updatedTile = self.tiles[i]
+            self.activeTiles.append(updatedTile)
             # print(i)
             # tile.updateValues(firstIndex + i, tile, tile.label)
         return self.activeTiles
@@ -62,15 +69,15 @@ class PageFrame(ttk.Frame):
 
     def test(self):
         print("Tiles List: ")
-        for tile in self.tiles:
-            print(str(self.tiles.index(tile)) + ": <" + tile.id + "> " + tile.label)
+        for tile in self.activeTiles:
+            print(str(self.tiles.index(tile)) + ": <" + tile.tile.id + "> " + tile.tile.label)
 
-        for c in self.winfo_children():
-            if isinstance(c, tk.Label) == False or isinstance(c, Tile):
-                print(str(type(c)) + ": " + str(c.label if isinstance(c, Tile) else ""))
-                print("\t(col, row): (" + str(c.grid_info()['column']) + ", " + str(c.grid_info()['row']) + ")")
-            else:
-                print(c['text'])
+        # for c in self.winfo_children():
+        #     if isinstance(c, tk.Label) == False or isinstance(c, Tile):
+        #         print(str(type(c)) + ": " + str(c.label if isinstance(c, Tile) else ""))
+        #         print("\t(col, row): (" + str(c.grid_info()['column']) + ", " + str(c.grid_info()['row']) + ")")
+        #     else:
+        #         print(c['text'])
         # self.frameManager.setID()
 
 
