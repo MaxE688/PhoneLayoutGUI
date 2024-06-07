@@ -18,17 +18,22 @@ class TileFrameManager:
         self.currentPage = 0
         self.title = "Button Page: " + self.model
 
-        parsedConfig = InitTileConfig(phoneModels[self.model]['brand'], cfg)
+        parsedConfig = InitTileConfig(self.model, phoneModels[self.model]['brand'], cfg)
         
         configTiles = parsedConfig.getTiles()
         tilesPerPage = phoneModels[self.model]['tilesPerPage']
-        self.pageCount = self.calcPageCount(len(configTiles), tilesPerPage) #math.ceil(len(configTiles) / tilesPerPage)
+        self.listManager = ListManager(configTiles, self.model)
+        self.pageCount = self.listManager.getPageCount() #math.ceil(len(configTiles) / tilesPerPage)
         self.tilesPerPage = self.calcTilesPerPage(self.pageCount, tilesPerPage)
+
+        if self.model == "Astra 6737i":
+            self.listManager.setTopTiles()
+
 
         if self.pageCount < 1: self.pageCount = 1
 
-        self.listManager = ListManager(configTiles, self.model)
-        self.pageContainer = PageFrameManager(self.root, self.model, self.listManager)
+        self.pageContainer = PageFrameManager(self)
+        # self.pageContainer = PageFrameManager(self.root, self.model, self.listManager)
 
 
 
@@ -42,15 +47,23 @@ class TileFrameManager:
         # else:
         #     self.makePages(configTiles, tilesPerPage)
 
+    def forget(self):
+        self.pageContainer.forget()
 
-    def calcPageCount(self, tileCount, tilesPerPage):
-        return math.ceil(tileCount / tilesPerPage)
-    
-    
+    def generateResults(self):
+        self.frameManager.generateResults(self.listManager)
+
+
+
     def calcTilesPerPage(self, pageCount, tilesPerPage):
         if pageCount > 1:
             return tilesPerPage - 1
         return tilesPerPage
+
+    # def calcPageCount(self, tileCount, tilesPerPage):
+    #     return math.ceil(tileCount / tilesPerPage)
+    
+    
 
 
 

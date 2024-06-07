@@ -1,19 +1,30 @@
-
+from Model.constants import phoneModels
 
 class ResultsGenerator:
-    def __init__(self, tileList, brand):
+    def __init__(self, tileList, model):
+        brand = phoneModels[model]["brand"]
         self.strings = ""
         match(brand):
             case "Astra":
+                self.setAastraID(tileList)
                 self.strings = self.astra(tileList)
-                pass
             case "Yealink":
+                if model == "Yealink EXP40":
+                    self.setEXP40ID(tileList)
+                else:
+                    self.setYealinkID(tileList)
                 self.strings = self.yealink(tileList)
-                pass
 
 
     def astra(self, tileList):
-        pass
+        buttonStrings = []
+
+        for tile in tileList:
+            button = (str(tile.id) + "." + "type = " + str(tile.type) + "\n" +  
+                      str(tile.id) + "." + "label = " + str(tile.label) + "\n" +
+                      str(tile.id) + "." + "value = " + str(tile.value) + "\n")
+            buttonStrings.append(button) 
+        return buttonStrings
 
     def yealink(self, tileList):
         buttonStrings = []
@@ -27,6 +38,21 @@ class ResultsGenerator:
             buttonStrings.append(button)
         # return self.makeReturnString(buttonStrings)
         return buttonStrings
+    
+    def setAastraID(self, tileList):
+        for i, tile in enumerate(tileList):
+            key = i + 1
+            tile.id = "softkey" + str(key)
+    
+    def setYealinkID(self, tileList):
+        for i, tile in enumerate(tileList):
+            key = i+1
+            tile.id = "linekey." + str(key)
+
+    def setEXP40ID(self, tiles):
+        for i, tile in enumerate(tiles):
+            key = i+1
+            tile.id = "expansion_module.1.key." + str(key)
 
     def makeReturnString(self, buttons):
         result = ""

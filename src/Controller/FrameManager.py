@@ -64,3 +64,16 @@ class FrameManager:
         self.root.title(self.tileFrameManager.title)
         self.root.createMenu(self)
         self.root.center()
+
+
+    def generateResults(self, listManager):
+        self.resultsGenerator = ResultsGenerator(listManager.tiles, self.model)
+
+        self.results = self.resultsGenerator.getStrings()
+
+        self.resultsFrame()
+
+    def resultsFrame(self):
+        self.tileFrameManager.forget()
+
+        self.resultsFrame = ResultsFrame(self.root, self.results)

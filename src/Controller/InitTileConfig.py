@@ -12,10 +12,11 @@ import re
 from Model.Tile import Tile
 
 class InitTileConfig:
-    def __init__(self, brand, cfg):
+    def __init__(self,model, brand, cfg):
     # def __init__(self, tileFrame, brand, cfg):
 
         # self.tileFrame = tileFrame
+        self.model = model
         self.brand = brand
         self.cfg = cfg
 
@@ -41,8 +42,8 @@ class InitTileConfig:
             topBtnGroupRegx = re.compile("((topsoftkey\d+ \w+: *.* *\d*\n){3,4})\n")
             # btnGroupRegx = re.compile("(((?<=[^p])softkey\d+ \w+: *.* *\d*\n){1,4})\n*")
             btnGroupRegx = re.compile("(((?<=[^p])softkey\d+ \w+: *.* *\d*\n?){1,4})\n*")
-
-            self.topBtnGroup = topBtnGroupRegx.findall(self.cfg)
+            if self.model == "Astra 6737i":
+                self.topBtnGroup = topBtnGroupRegx.findall(self.cfg)
             # print(self.topBtnGroup[0][0])
             # print()
             self.btnGroup = btnGroupRegx.findall(self.cfg)

@@ -44,11 +44,6 @@ class PageLayout:
 
 
         
-
-        # if self.modelLayout.__class__.__name__ == "A37":
-        #     self.modelLayout.topkeys = self.modelLayout.getTopKeys(self.listManager.tiles)
-
-        # self.modelLayout.draw(self.tiles)
         self.draw(self.pageFrame.getTiles())
         self.pageFrame.create()
 
@@ -87,32 +82,13 @@ class PageLayout:
             child.grid_forget()
 
     def redraw(self, page: PageFrame, pageFirstIndex):
-        # self.tilePage.forget(page)
-
-        # pageSize = self.listManager.getPageSize()
-        # pageTiles = self.listManager.getPageTiles(pageFirstIndex, pageSize)
-        
-        # for tile in pageTiles:
-        #     tile.setParent(page)
-        # page.setTiles(tiles)
-        # page.setTiles(pageTiles) #NEED: startIndex, pageSize
         self.forget()
 
         self.pageFrameManager.updatePageLabel(self.listManager.getPageOfIndex(pageFirstIndex), self.listManager.getPageCount())
         tiles = self.listManager.getPageTiles(pageFirstIndex)
         pageTiles = page.updateLabels(pageFirstIndex, tiles)
 
-        # if self.__class__.__name__ == 'A37':
-        #     self.modelLayout.topkeys = self.modelLayout.getTopKeys(self)
-            
-        # self.modelLayout.draw(pageTiles, self.listManager.getPageCount())
         self.draw(pageTiles)
-
-
-
-        
-
-
 
 
     def nextPage(self):
@@ -121,17 +97,13 @@ class PageLayout:
             self.redraw(self.pageFrame, nextPageIndex)
         pass
 
+
     def prevPage(self):
         prevPageIndex = self.pageFrame.activeTiles[0].index - 1
         if prevPageIndex >= 0:
             prevPageIndex = self.listManager.getPageFirstTile(prevPageIndex)
             self.redraw(self.pageFrame, prevPageIndex)
         pass
-
-
-
-
-
 
 
     def addNewTile(self):
@@ -153,7 +125,6 @@ class PageLayout:
 
     def editTile(self, tile):
         EditTileManager(self, self.model, tile)
-        # etm.editFrame.center()
 
 
     def drag(self, widget, x, y):
@@ -163,17 +134,15 @@ class PageLayout:
         droppedIndex = dropped.index
         dropped.place_forget()
         crushed = self.pageFrame.winfo_containing(x, y)
-        # crushed = dropped.parent.winfo_containing(x, y)
-        # crushed = self.winfo_containing(x, y)
 
         if isinstance(crushed, PageTile) and crushed != dropped:
             print("ModelFrame (drop): yes sir")
-            # self.layoutManager.shiftTiles(self.listManager, dropped, crushed)
             
-            # Removes dropped tile from list, inserts dropped tile into crushed tile's position
-            self.listManager.shiftTile(dropped.index, crushed.index)
-            # self.redraw(self.pageFrame, self.listManager.getPageFirstTile(droppedIndex))
-            
+            if dropped.tile.id[:3] == "top":
+                self.listManager.shiftTopTile(dropped.index, crushed.index)
+            else:
+                # Removes dropped tile from list, inserts dropped tile into crushed tile's position
+                self.listManager.shiftTile(dropped.index, crushed.index)
         else:
             match(crushed):
                 case self.nextPageTile:
@@ -196,9 +165,6 @@ class PageLayout:
         self.redraw(self.pageFrame, self.listManager.getPageFirstTile(droppedIndex))
 
 
-
-
-
     def cont(self):
         self.pageFrameManager.finish()
 
@@ -214,116 +180,10 @@ class PageLayout:
             self.mouseManager.addDraggable(tile)
             self.mouseManager.addEditable(tile)
     
+
     def setMouseManager(self, tile):
         self.mouseManager.addDraggable(tile)
         self.mouseManager.addEditable(tile)
 
 
 
-
-        # else:
-        #     match(crushed):
-        #         case self.layoutManager.nextPageTile:
-        #             shiftedTile = self.frameManager.toNextPage(self, dropped)
-        #             newTile = self.layoutManager.copyTile(self, shiftedTile)
-        #             self.listManager.remove(dropped)
-        #             self.listManager.append(newTile)
-        #         case self.layoutManager.prevPageTile:
-        #             shiftedTile = self.frameManager.toPrevPage(self, dropped)
-
-        #             if shiftedTile != None:
-        #                 newTile = self.layoutManager.copyTile(self, shiftedTile)
-
-        #                 self.listManager.remove(dropped)
-        #                 self.listManager.insert(0, newTile)
-        #             else:
-        #                 self.frameManager.deletePage(self)
-                
-        #         case self.layoutManager.deleteTile:
-        #             self.listManager.remove(dropped)
-        #             dropped.destroy()
-
-        #             if len(self.listManager) == 0:
-        #                 self.frameManager.deletePage(self)
-        #             elif self.frameManager.pageCount == 2 & len(self.listManager) == 1:
-        #                 pass
-
-        #             elif self.frameManager.pageCount > 1:
-        #                 # subList = self.frameManager.tilePageFrames
-        #                 # shiftPageCount = len(self.frameManager.tilePageFrames[index:])
-        #                 self.frameManager.deleteTileShift(self)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    # def swapTilesNext(self, frame, tile):
-    #     incomingTile = self.copyTile(frame, tile)
-    #     firstTile = self.tiles.pop(0)
-    #     self.tiles.insert(0, incomingTile)
-    #     self.redraw(frame)
-
-    #     return firstTile
-
-    # def swapTilesPrev(self, frame, tile):
-    #     incomingTile = self.copyTile(frame, tile)
-    #     lastTile = self.tiles.pop()
-    #     self.tiles.append(incomingTile)
-    #     self.redraw(frame)
-
-    #     return lastTile
-
-    # def shiftTiles(self, tiles, dropped, crushed):
-    #     # self.tilePage.shiftTiles(tiles, dropped, crushed)
-    #     index = tiles.index(crushed)
-
-    #     if index >= len(tiles):
-    #         tiles.append(dropped)
-    #     else:
-    #         tiles.insert(index, tiles.pop(tiles.index(dropped)))
-
-    #     if isinstance(self.pageLayout, A37):
-    #         self.tiles = tiles
-    #         self.pageLayout.topkeys = self.pageLayout.getKeys('top')
-    #         self.pageLayout.softkeys = self.pageLayout.getKeys('soft')
-
-
-    # def copyTile(self, parent, widget):
-    #     tile = Tile(
-    #                 widget.id,
-    #                 widget.type,
-    #                 widget.line,
-    #                 widget.value,
-    #                 widget.label,
-    #                )
-    #     tile.setParent(parent)
-    #     parent.mouseManager.addDraggable(tile)
-    #     parent.mouseManager.addEditable(tile)
-    #     widget.destroy()
-
-
-    #     return tile

@@ -9,12 +9,28 @@ class ListManager:
   def __init__(self, tiles: List, model):
     self.tiles = tiles
     self.model = model
-    self.tilesPerPage = phoneModels[model]["tilesPerPage"]
-  
+    self.tilesPerPage = phoneModels[model]["tilesPerPage"]\
+    
+    # if model == "Astra 6737i":
+    #   self.topTiles
 
 
   def getTiles(self):
     return self.tiles
+  
+
+  def setTopTiles(self):
+    self.topTiles = []
+    for i, tile in enumerate(self.tiles):
+      if tile.id[:3] == "top":
+        pTile = PageTile(i, tile)
+        self.topTiles.append(pTile)
+      
+
+    for t in self.topTiles:
+      if t.tile.id[:3] == "top" and self.tiles.count(t) > 0:
+        self.tiles.remove(t)
+
   
 
 
@@ -22,11 +38,12 @@ class ListManager:
     tiles = []
     for i in range(pageSize):
       index = startIndex + i
-      if index > len(self.tiles):
+      if index >= len(self.tiles):
         break
       tiles.append(PageTile(index, self.tiles[index]))
     
     return tiles
+  
   
   def getPageTiles(self, startIndex):
     tiles = []
@@ -94,8 +111,14 @@ class ListManager:
   def shiftTile(self, tileIndex, destinationIndex):
     mTile = self.tiles.pop(tileIndex)
     self.tiles.insert(destinationIndex, mTile)
-    for t in self.tiles:
-      print(self.tiles.index(t))
+    
+
+
+  def shiftTopTile(self, tileIndex, destinationIndex):
+    mTile = self.topTiles.pop(tileIndex)
+    self.topTiles.insert(destinationIndex, mTile)
+
+
 
   def toNextPage(self, droppedIndex, lastIndex):
     if lastIndex + 1 >= len(self.tiles):

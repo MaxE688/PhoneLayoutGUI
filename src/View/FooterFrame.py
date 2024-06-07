@@ -16,7 +16,8 @@ class FooterFrame(ttk.Frame):
 
         self.listManager = listManager
         self.pageLayout = pageLayout
-        l = str(self.pageLayout.currentPage + 1) + " / " + str(self.listManager.getPageCount()) 
+        # l = str(self.pageLayout.currentPage + 1) + " / " + str(self.listManager.getPageCount()) 
+        l = self.stringify(self.pageLayout.currentPage + 1, self.listManager.getPageCount()) 
         self.label = StringVar()
         self.label.set(l)
         # label = str(self.tileFM.currentPage) + " / " + str(self.tileFM.pageCount)
@@ -31,10 +32,11 @@ class FooterFrame(ttk.Frame):
         self.pageLabel = tk.Label(self.pageControlFrame, textvariable = self.label)
         self.create()
 
-
+    def stringify(self, curr, total):
+        return str(curr) + " / " + str(total)
 
     def setPageLabel(self, curr, total):
-        newLabel = str(curr) + " / " + str(total)
+        newLabel = self.stringify(curr, total)
         self.label.set(newLabel)
 
 
@@ -74,7 +76,7 @@ class FooterFrame(ttk.Frame):
 
     def cont(self):
         print("continue")
-        self.listManager.cont()
+        self.pageLayout.cont()
 
     def quit(self):
         sys.exit(0)
@@ -89,14 +91,14 @@ class FooterFrame(ttk.Frame):
 
         self.pageLayout.prevPage()
 
-    def updateFrame(self):
-        self.pageControlFrame.pack_forget()
-        self.buttonFrame.pack_forget()
+    # def updateFrame(self):
+    #     self.pageControlFrame.pack_forget()
+    #     self.buttonFrame.pack_forget()
 
-    def updateLabel(self, curr):
-        label = str(curr + 1) + " / " + str(self.listManager.pageCount)
-        self.pageLabel.destroy()
-        # self.prevBtn.grid_forget()
-        self.pageLabel = tk.Label(self.pageControlFrame, text = label)
-        self.pageLabel.grid(column = 4, row = 0, columnspan = 2)
-        # self.prevBtn.pack()
+    # def updateLabel(self, curr):
+    #     label = str(curr + 1) + " / " + str(self.listManager.pageCount)
+    #     self.pageLabel.destroy()
+    #     # self.prevBtn.grid_forget()
+    #     self.pageLabel = tk.Label(self.pageControlFrame, text = label)
+    #     self.pageLabel.grid(column = 4, row = 0, columnspan = 2)
+    #     # self.prevBtn.pack()
