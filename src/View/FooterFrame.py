@@ -1,6 +1,5 @@
 import sys
 import tkinter as tk
-
 from tkinter import StringVar, ttk
 
 class FooterFrame(ttk.Frame):
@@ -11,16 +10,12 @@ class FooterFrame(ttk.Frame):
 
         super().__init__(container, style = 'Foot.TFrame')
 
-
-
-
         self.listManager = listManager
         self.pageLayout = pageLayout
-        # l = str(self.pageLayout.currentPage + 1) + " / " + str(self.listManager.getPageCount()) 
+        
         l = self.stringify(self.pageLayout.currentPage + 1, self.listManager.getPageCount()) 
         self.label = StringVar()
         self.label.set(l)
-        # label = str(self.tileFM.currentPage) + " / " + str(self.tileFM.pageCount)
 
         self.pageControlFrame = tk.Frame(self)
         self.buttonFrame = tk.Frame(self)
@@ -32,22 +27,24 @@ class FooterFrame(ttk.Frame):
         self.pageLabel = tk.Label(self.pageControlFrame, textvariable = self.label)
         self.create()
 
+
+
     def stringify(self, curr, total):
         return str(curr) + " / " + str(total)
+
+
 
     def setPageLabel(self, curr, total):
         newLabel = self.stringify(curr, total)
         self.label.set(newLabel)
 
 
+
     def create(self):
-        # self.grid(column = 0, row = 1, sticky = "we")
+        
         self.pack()
         self.grid_rowconfigure(1, weight = 1)
         self.grid_columnconfigure(0, weight = 1)
-
-        # tk.Frame(self, width = 25, height = 25, bg = 'green').grid(column = 0, row = 0)
-        # tk.Frame(self, width = 25, height = 25, bg = 'yellow').grid(column = 1, row = 0)
 
         self.contBtn.grid(column = 2, row = 1, columnspan = 3, pady = (10))
         self.cancelBtn.grid(column = 5, row = 1, columnspan = 3)
@@ -74,16 +71,23 @@ class FooterFrame(ttk.Frame):
         self.pageControlFrame.pack()
         self.buttonFrame.pack()
 
+
+
     def cont(self):
         print("continue")
         self.pageLayout.cont()
 
+
+
     def quit(self):
         sys.exit(0)
+
+
 
     def nextPage(self):
         print("next page")
         self.pageLayout.nextPage()
+
 
 
     def prevPage(self):
@@ -91,14 +95,3 @@ class FooterFrame(ttk.Frame):
 
         self.pageLayout.prevPage()
 
-    # def updateFrame(self):
-    #     self.pageControlFrame.pack_forget()
-    #     self.buttonFrame.pack_forget()
-
-    # def updateLabel(self, curr):
-    #     label = str(curr + 1) + " / " + str(self.listManager.pageCount)
-    #     self.pageLabel.destroy()
-    #     # self.prevBtn.grid_forget()
-    #     self.pageLabel = tk.Label(self.pageControlFrame, text = label)
-    #     self.pageLabel.grid(column = 4, row = 0, columnspan = 2)
-    #     # self.prevBtn.pack()

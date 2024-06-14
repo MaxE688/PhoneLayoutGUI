@@ -1,8 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
-from Model.Tile import Tile
 
 class A39:
+
     def __init__(self, layoutManager, parent):
         self.parent = parent
         self.layoutManager = layoutManager
@@ -10,6 +9,8 @@ class A39:
 
         self.f = tk.Frame(parent, width = 100)
         self.f.grid(column = 2, row = 4)
+
+
 
     def draw(self, tiles, pageCount):
         for i, tile in enumerate(tiles):

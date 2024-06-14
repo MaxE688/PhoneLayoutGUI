@@ -1,16 +1,12 @@
 import tkinter as tk
-from tkinter import ttk
-from Model.Tile import Tile
 
 class T42:
+
     def __init__(self, layoutManager, parent):
 
-        # self.tilesPerPage = phoneModels[parent.frameManager.model]['tilesPerPage']
-        # self.tiles = tiles
         self.parent = parent
         self.layoutManager = layoutManager
         self.numOfRows = 3
-        # self.tilesPerPage = 6
 
         self.f = tk.Frame(parent, width = 100)
         self.f.grid(column = 2, row = 4)

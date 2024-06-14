@@ -1,11 +1,13 @@
 import tkinter as tk
-from tkinter import StringVar, ttk
 
 class PageTile(tk.Label):
+
    def __init__(self, index, tile):
       self.index = index
       self.tile = tile
-      self.label = StringVar()
+      self.label = tk.StringVar()
+
+
 
    def setParent(self, parent):
       super().__init__(
@@ -18,15 +20,23 @@ class PageTile(tk.Label):
       
       self.parent = parent
       self.setLabel(self.tile.label)
-         
+
+
+
    def setIndex(self, index):
       self.index = index
+
+
 
    def setTile(self, tile):
       self.tile = tile
 
+
+
    def setLabel(self, label):
       self.label.set(label)
+
+
 
    def updateValues(self, newIndex, newTile, newLabel):
       self.index = newIndex

@@ -14,6 +14,7 @@ from View.PageFrame import PageFrame
 from Controller.MouseManager import MouseManager
 
 class PageLayout:
+
     def __init__(self, pageFrameManager, tilePageContainerFrame, model, listManager:ListManager):
         self.pageFrameManager = pageFrameManager
         self.parent = tilePageContainerFrame
@@ -23,7 +24,6 @@ class PageLayout:
         tileLabels = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
         self.mouseManager = MouseManager(self)
 
-
         self.pageFrame = PageFrame(self.parent, self, tileLabels)
         self.pageTileSetup(self.pageFrame, tileLabels)
 
@@ -31,7 +31,6 @@ class PageLayout:
         self.modelLayout = self.getModelLayout(model, self.pageFrame)
         if self.modelLayout.topTiles:
             self.pageTileSetup(self.modelLayout.getTopKeyFrame(), self.listManager.topTiles)
-
 
         self.nextPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nnext page', height = 4, width = 10)
         self.prevPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nprev page', height = 4, width = 10)
@@ -42,12 +41,9 @@ class PageLayout:
         self.printBtn = tk.Button(      self.pageFrame, text = "Print Children", command = self.pageFrame.test)
 
 
-
         
         self.draw(self.pageFrame.getTiles())
         self.pageFrame.create()
-
-
 
 
 
@@ -69,17 +65,20 @@ class PageLayout:
                 return EXP40(self, parent)
 
 
+
     def draw(self, tiles):
         if self.listManager.topTiles:
             self.modelLayout.draw(tiles, self.listManager.getPageCount(), self.listManager.topTiles )
         else:
             self.modelLayout.draw(tiles, self.listManager.getPageCount())
 
-    # def forget(self, page):
+
+
     def forget(self):
-        # for child in page.winfo_children():
         for child in self.pageFrame.winfo_children():
             child.grid_forget()
+
+
 
     def redraw(self, page: PageFrame, pageFirstIndex):
         self.forget()
@@ -91,11 +90,13 @@ class PageLayout:
         self.draw(pageTiles)
 
 
+
     def nextPage(self):
         nextPageIndex = self.pageFrame.activeTiles[-1].index + 1
         if nextPageIndex < len(self.listManager.tiles):
             self.redraw(self.pageFrame, nextPageIndex)
         pass
+
 
 
     def prevPage(self):
@@ -104,6 +105,7 @@ class PageLayout:
             prevPageIndex = self.listManager.getPageFirstTile(prevPageIndex)
             self.redraw(self.pageFrame, prevPageIndex)
         pass
+
 
 
     def addNewTile(self):
@@ -116,19 +118,23 @@ class PageLayout:
             "",
             "New Tile"
         )
-        # newPageTile = PageTile()
-        # self.editTile(newTile)
+
         self.listManager.addTile(newTile)
         lastIndex = len(self.listManager.tiles) - 1
         pageFirstTile = self.listManager.getPageFirstTile(lastIndex) 
         self.redraw(self.pageFrame, pageFirstTile)
 
+
+
     def editTile(self, tile):
         EditTileManager(self, self.model, tile)
 
 
+
     def drag(self, widget, x, y):
         widget.place(x = x, y = y)
+
+
 
     def drop(self, dropped, x, y, col, row):
         droppedIndex = dropped.index
@@ -162,7 +168,9 @@ class PageLayout:
                 case _:
                     # Reset dropped tile to original position
                     pass
+
         self.redraw(self.pageFrame, self.listManager.getPageFirstTile(droppedIndex))
+
 
 
     def cont(self):
@@ -174,11 +182,13 @@ class PageLayout:
         self.redraw(self.pageFrame, self.listManager.getPageFirstTile(pageTile))
 
 
+
     def pageTileSetup(self, parent, tiles):
         for tile in tiles:
             tile.setParent(parent)
             self.mouseManager.addDraggable(tile)
             self.mouseManager.addEditable(tile)
+
     
 
     def setMouseManager(self, tile):

@@ -1,14 +1,13 @@
 # import constants
 import sys
-import Model.constants
 import tkinter as tk
-# from constants import *
-from tkinter import ttk
 
 class Root(tk.Tk):
+
     def __init__(self):
         super().__init__()
-        # self.center()
+
+
 
     def center(self):
         self.update()
@@ -30,6 +29,8 @@ class Root(tk.Tk):
         self.geometry(center)
         print('I am called from ROOT.CENTER')
 
+
+
     def createMenu(self, fm):
 
         self.fm = fm
@@ -47,11 +48,17 @@ class Root(tk.Tk):
 
         fm.root.config(menu = menuBar)
 
+
+    # TODO: Functionality incomplete
     def newCfg(self):
         print("Creating new configuration...")
         self.fm.configFrame(None, self.fm.model)
+
+
+
     def selectModel(self):
         self.fm.selectModelFrame(None)
+
 
 
     def gridConfigure(self):
@@ -59,6 +66,7 @@ class Root(tk.Tk):
         self.grid_columnconfigure(0, weight = 1)
         self.grid_rowconfigure(1, weight = 1)
         self.grid_columnconfigure(1, weight = 1)
+
 
 
     def quit(self):

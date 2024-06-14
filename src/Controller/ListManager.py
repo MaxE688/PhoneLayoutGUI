@@ -6,32 +6,30 @@ from Model.Tile import Tile
 
 
 class ListManager:
+
   def __init__(self, tiles: List, model):
     self.tiles = tiles
     self.model = model
     self.tilesPerPage = phoneModels[model]["tilesPerPage"]\
     
-    # if model == "Astra 6737i":
-    #   self.topTiles
 
 
   def getTiles(self):
     return self.tiles
   
 
+
   def setTopTiles(self):
     self.topTiles = []
     for i, tile in enumerate(self.tiles):
       if tile.id[:3] == "top":
         pTile = PageTile(i, tile)
-        self.topTiles.append(pTile)
-      
+        self.topTiles.append(pTile)    
 
     for t in self.topTiles:
       if t.tile.id[:3] == "top" and self.tiles.count(t) > 0:
         self.tiles.remove(t)
 
-  
 
 
   def createPageTiles(self, startIndex, pageSize):
@@ -43,7 +41,8 @@ class ListManager:
       tiles.append(PageTile(index, self.tiles[index]))
     
     return tiles
-  
+
+
   
   def getPageTiles(self, startIndex):
     tiles = []
@@ -55,17 +54,13 @@ class ListManager:
     return tiles
 
 
+
   def getPageCount(self):
 
     return math.ceil(len(self.tiles) / self.getPageSize())
-    # if self.model == "Astra 6737i":
-    #   return math.ceil(len(self.tiles) / self.tilesPerPage)
-   
-    # if len(self.tiles) > self.tilesPerPage:
-    #   return math.ceil(len(self.tiles)  / (self.tilesPerPage - 1))
-      
-    # return 1
-  
+
+
+
   def getPageSize(self):
     tileCount = len(self.tiles)
     if tileCount > self.tilesPerPage and self.model != "Astra 6737i":
@@ -89,21 +84,21 @@ class ListManager:
       if tileIndex == index:
         return page
     return page
-  
+
+
 
   # Get the first PageTile on page containg tileIndex
   def getPageFirstTile(self, tileIndex):
     tilesPerPage = self.getPageSize()
     first = 0
     for index, t in enumerate(self.tiles):
-    # for t in self.tiles:
-      # index = self.tiles.index(t)
       mod = index % tilesPerPage 
 
       if mod == 0:
         first = index
       if tileIndex == index:
         return first
+
     return first
 
 
@@ -127,8 +122,8 @@ class ListManager:
     else:
       lastIndex += 1
       self.shiftTile(droppedIndex, lastIndex)
-      # dropped = self.tiles.pop(droppedIndex)
-      # self.tiles.insert(lastIndex, dropped)
+
+
 
   def toPrevPage(self, droppedIndex, insertIndex):
     if insertIndex - 1 < 0:
@@ -140,6 +135,8 @@ class ListManager:
     
   def deleteTile(self, tile):
     self.tiles.remove(tile)
+
+
 
   def addTile(self, tile):
     # newTile = Tile()

@@ -12,16 +12,14 @@ import re
 from Model.Tile import Tile
 
 class InitTileConfig:
+    
     def __init__(self,model, brand, cfg):
-    # def __init__(self, tileFrame, brand, cfg):
-
-        # self.tileFrame = tileFrame
+   
         self.model = model
         self.brand = brand
         self.cfg = cfg
 
         self.btnList = []
-
 
 
 
@@ -40,12 +38,10 @@ class InitTileConfig:
 
 
             topBtnGroupRegx = re.compile("((topsoftkey\d+ \w+: *.* *\d*\n){3,4})\n")
-            # btnGroupRegx = re.compile("(((?<=[^p])softkey\d+ \w+: *.* *\d*\n){1,4})\n*")
             btnGroupRegx = re.compile("(((?<=[^p])softkey\d+ \w+: *.* *\d*\n?){1,4})\n*")
             if self.model == "Astra 6737i":
                 self.topBtnGroup = topBtnGroupRegx.findall(self.cfg)
-            # print(self.topBtnGroup[0][0])
-            # print()
+            
             self.btnGroup = btnGroupRegx.findall(self.cfg)
 
         elif self.brand == "Yealink":
@@ -61,6 +57,8 @@ class InitTileConfig:
 
             self.exp40Group = exp40Group.findall(self.cfg)
             self.btnGroup = btnGroupRegx.findall(self.cfg)
+
+
 
         keyR = re.compile(keyStr)
         typeR = re.compile(typeStr)
@@ -83,21 +81,16 @@ class InitTileConfig:
             id = re.compile("(?P<id>expansion_module.\d.key.\d+)")
             self.parseMatch(self.exp40Group, id, typeR, lineR, valueR, labelR)
 
-
         return self.btnList
 
 
     def parseMatch(self, btnGroups, idR, typeR, lineR, valueR, labelR):
 
-        
         idNumR = re.compile("\d+")
 
         pID = 1
-        for index, btnTup in enumerate(btnGroups):
+        for btnTup in btnGroups:
             btn = btnTup[0]
-
-
-            # print(btn)
 
             id = idR.search(btn)
             type = typeR.search(btn)
@@ -105,11 +98,12 @@ class InitTileConfig:
             value = valueR.search(btn)
             label = labelR.search(btn)
 
-
             idNum = int(idNumR.search(id['id'])[0])
-            # print(type(idNum))
+
             print(idNum)
             print()
+
+            # if pID is 2 greater than idNum
             if idNum - pID > 1:
                 while idNum - pID >= 1:
                     tempID = id['id'].replace(str(idNum), str(pID))
@@ -130,14 +124,6 @@ class InitTileConfig:
                     self.btnList.append(t)
                     pID += 1
 
-            # print(id['id'])
-            # print(type['type'])
-            # # print(line['line'])
-            #
-            # print(value['value'])
-            # print(label['label'])
-            # print()
-            # print(id['id'])
             t = Tile(
                         # self.tileFrame,
                         id['id'] if id else None,
@@ -146,13 +132,13 @@ class InitTileConfig:
                         value['value'] if value else None,
                         label['label'] if label else None
                     )
-            # print(t.toString())
+            
             self.btnList.append(t)
             pID += 1
-            # print(t.toString())
+           
+
 
     def fillEmptyTopkeys(self):
-        keys = [1,2,3,4,5,6]
         index = 1
         for i, b in enumerate(self.btnList):
             id = int(b.id[-1])
@@ -169,6 +155,7 @@ class InitTileConfig:
                                 "auto_gen" + str(x + 1)
                             )
                     self.btnList.insert(x-1, t)
+
         for i in range(len(self.btnList) + 1, 7):
             t = Tile(
                         'topsoftkey' + str(i),

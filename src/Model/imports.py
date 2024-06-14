@@ -1,5 +1,4 @@
-# import Root as Root
-# import ModelSelectFrame as ModelSelectFrame
+
 
 from Root import *
 from ModelSelectFrame import *
@@ -13,6 +12,3 @@ from T42 import *
 from T46 import *
 from T48 import *
 from EXP40 import *
-
-# import Root
-# import ModelSelectFrame

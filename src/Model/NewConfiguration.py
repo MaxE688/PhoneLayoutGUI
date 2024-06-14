@@ -1,7 +1,7 @@
 from Model.constants import phoneModels
 
 class NewConfiguration:
-    # def__init__(self, model):
+    
     def getString(self, model):
         cfg = ""
 
@@ -9,8 +9,8 @@ class NewConfiguration:
             #return 6 topsoftkeys, and 3 softkeys
             str = ""
             for i in range(6):
+                pass
                 
-                 
         elif phoneModels[model]["brand"] == "Astra":
             str = ""
             for i in range(phoneModels[model]['tilesPerPage']):

@@ -17,21 +17,23 @@ from View.Root import *
 from View.ModelSelectFrame import *
 from View.ConfigFrame import *
 from View.ResultsFrame import ResultsFrame
-# import Controller.TileFrameManager
 from Controller.TileFrameManager import *
 from Controller.ResultsGenerator import ResultsGenerator
-# from Controller.InitTileConfig import *
 
 class FrameManager:
 
     def __init__(self):
         self.root = None
 
+
+
     def initModelSelectFrame(self, frame):
         self.root = self.createWindow(frame)
         self.modelSelectFrame = ModelSelectFrame(self)
         self.root.title(self.modelSelectFrame.title)
         self.root.center()
+
+
 
     def createWindow(self, frame):
         if frame != None:
@@ -42,8 +44,11 @@ class FrameManager:
         root = Root()
         return root
 
+
+
     def startLoop(self):
         self.root.mainloop()
+
 
 
     def initConfigFrame(self, frame, model):
@@ -57,6 +62,7 @@ class FrameManager:
         self.root.center()
 
 
+
     def initPhoneFrame(self, frame, configText):
         self.root = self.createWindow(frame)
         self.config = configText
@@ -66,12 +72,15 @@ class FrameManager:
         self.root.center()
 
 
+
     def generateResults(self, listManager):
         self.resultsGenerator = ResultsGenerator(listManager.tiles, self.model)
 
         self.results = self.resultsGenerator.getStrings()
 
         self.resultsFrame()
+
+
 
     def resultsFrame(self):
         self.tileFrameManager.forget()
