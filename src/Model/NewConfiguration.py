@@ -1,29 +1,38 @@
 from Model.constants import phoneModels
 
 class NewConfiguration:
-    
-    def getString(self, model):
+
+    def getString(model):
         cfg = ""
-
-        if model == "Astra 6737i":
-            #return 6 topsoftkeys, and 3 softkeys
-            str = ""
-            for i in range(6):
-                pass
+        tilesRange = phoneModels[model]['tilesPerPage'] + 1
                 
-        elif phoneModels[model]["brand"] == "Astra":
-            str = ""
-            for i in range(phoneModels[model]['tilesPerPage']):
-                str += ("softkey" + str(i+1) + " type = NA\n" +
-                       "softkey" + str(i+1) + " label = " + str(i+1) + "\n" +
-                       "softkey" + str(i+1) + " value = " + str(i+1) + "\n\n")
-            cfg = str
-        elif phoneModels[model]["brand"] == "Yealink":
-            str = ""
-            for i in range(phoneModels[model]['tilesPerPage']):
-                str += ("linekey." + str(i+1) + ".type = 0\n" +
-                       "linekey." + str(i+1) + ".line = 1\n" +
-                       "linekey." + str(i+1) + ".label = " + str(i+1) + "\n\n")
-            cfg = str
+        if phoneModels[model]["brand"] == "Astra":
+            
+            if model == "Astra 6737i":
+                #return 6 topsoftkeys, and 3 softkeys
+                tilesRange = 7
+                for i in range(1, 7):
+                    cfg += (
+                        "topsoftkey" + str(i) + " type: NA\n"
+                        "topsoftkey" + str(i) + " label: New\n"
+                        "topsoftkey" + str(i) + " value: 0\n\n"
+                    )
+            
+            for i in range(1, tilesRange):
+                cfg += (
+                    "softkey" + str(i) + " type: NA\n" +
+                    "softkey" + str(i) + " label: " + str(i) + "\n" +
+                    "softkey" + str(i) + " value: " + str(i) + "\n\n"
+                )
+            
 
+        elif phoneModels[model]["brand"] == "Yealink":
+            
+            for i in range(tilesRange):
+                cfg += (
+                    "linekey." + str(i) + ".type = 0\n" +
+                    "linekey." + str(i) + ".line = 1\n" +
+                    "linekey." + str(i) + ".label = " + str(i) + "\n\n"
+                )
+        # print(cfg)
         return cfg

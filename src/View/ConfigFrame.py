@@ -32,14 +32,14 @@ class ConfigFrame(ttk.Frame):
         tk.Frame(self, height = 10).grid(column = 0, row = 3)
 
 
-
+    # Event listener for New Config button
     def newConfig(self):
         print("config Frame new config")
+        self.fm.initPhoneFrame(self, "")
 
 
-
+    # Event listener for submit button
     def submit(self):
-
         cfg = self.text.get("1.0", "end-1c")
         if cfg == "":
             print("MessageBox(\"Cannot submit blank config.\")")
@@ -47,7 +47,7 @@ class ConfigFrame(ttk.Frame):
             self.fm.initPhoneFrame(self, cfg)
 
 
-
+    # Event listener for cancel button
     def cancel(self):
         print('Config Frame cancel')
         self.fm.selectModelFrame(self)

@@ -57,7 +57,12 @@ class ListManager:
 
   def getPageCount(self):
 
-    return math.ceil(len(self.tiles) / self.getPageSize())
+    tileCount = len(self.tiles)
+    # if self.model == "Astra 6737i":
+    #   tileCount -= 6
+
+    num = math.ceil(tileCount / self.getPageSize())
+    return num
 
 
 

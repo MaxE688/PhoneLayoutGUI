@@ -8,7 +8,7 @@ class Root(tk.Tk):
         super().__init__()
 
 
-
+    # Centers self on screen
     def center(self):
         self.update()
         # print(self.winfo_screenwidth())
@@ -24,13 +24,11 @@ class Root(tk.Tk):
         x = int((screenW/2)-(width/2))
         y = int((screenH/2)-(height/2))
 
-
         center = '+' + str(x) + '+' + str(y)
         self.geometry(center)
-        print('I am called from ROOT.CENTER')
 
 
-
+    # Creates the menu bar 
     def createMenu(self, fm):
 
         self.fm = fm
@@ -40,7 +38,6 @@ class Root(tk.Tk):
         file = tk.Menu(menuBar, tearoff = 0)
         file.add_command(label = "New Config", command = self.newCfg)
         file.add_command(label = "Select Model", command = self.selectModel)
-        # file.add_command(label = "", command = )
         file.add_separator()
         file.add_command(label = "Quit", command = self.quit)
 
@@ -50,17 +47,25 @@ class Root(tk.Tk):
 
 
     # TODO: Functionality incomplete
+    # Go back to window for user to enter new config text
     def newCfg(self):
         print("Creating new configuration...")
         self.fm.configFrame(None, self.fm.model)
 
 
 
+    # TODO: Functionality incomplete
+    # Go back to window for user to select phone model
     def selectModel(self):
         self.fm.selectModelFrame(None)
 
 
+    # Exit application
+    def quit(self):
+        sys.exit(0)
 
+
+    # Configure grid
     def gridConfigure(self):
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(0, weight = 1)
@@ -68,6 +73,3 @@ class Root(tk.Tk):
         self.grid_columnconfigure(1, weight = 1)
 
 
-
-    def quit(self):
-        sys.exit(0)

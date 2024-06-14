@@ -6,6 +6,7 @@ class A39:
         self.parent = parent
         self.layoutManager = layoutManager
         self.numOfRows = 6
+        
 
         self.f = tk.Frame(parent, width = 100)
         self.f.grid(column = 2, row = 4)

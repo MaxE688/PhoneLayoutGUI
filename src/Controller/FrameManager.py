@@ -8,9 +8,6 @@ ToDo:
             - FooterFrame
             -
 
-Note: Name of this file has changed from ChangeLayout.py
-
-
 """
 from Model.constants import *
 from View.Root import *
@@ -26,7 +23,7 @@ class FrameManager:
         self.root = None
 
 
-
+    # Creates the window for user to select the model of phone
     def initModelSelectFrame(self, frame):
         self.root = self.createWindow(frame)
         self.modelSelectFrame = ModelSelectFrame(self)
@@ -34,7 +31,7 @@ class FrameManager:
         self.root.center()
 
 
-
+    # Creates new root 
     def createWindow(self, frame):
         if frame != None:
             frame.destroy()
@@ -45,12 +42,12 @@ class FrameManager:
         return root
 
 
-
+    # Starts the main loop
     def startLoop(self):
         self.root.mainloop()
 
 
-
+    # Creates the window for user to paste button config
     def initConfigFrame(self, frame, model):
 
         self.root = self.createWindow(frame)
@@ -62,7 +59,7 @@ class FrameManager:
         self.root.center()
 
 
-
+    # Create the window for user to edit buttons
     def initPhoneFrame(self, frame, configText):
         self.root = self.createWindow(frame)
         self.config = configText
@@ -72,17 +69,14 @@ class FrameManager:
         self.root.center()
 
 
-
+    # Converts the button arrangement to text for final frame
     def generateResults(self, listManager):
         self.resultsGenerator = ResultsGenerator(listManager.tiles, self.model)
-
         self.results = self.resultsGenerator.getStrings()
-
         self.resultsFrame()
 
 
-
+    # Creates window displaying the text output 
     def resultsFrame(self):
         self.tileFrameManager.forget()
-
         self.resultsFrame = ResultsFrame(self.root, self.results)

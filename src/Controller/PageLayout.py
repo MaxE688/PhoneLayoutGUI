@@ -29,7 +29,8 @@ class PageLayout:
 
         # Draws widgets to PageFrame
         self.modelLayout = self.getModelLayout(model, self.pageFrame)
-        if self.modelLayout.topTiles:
+        # if self.modelLayout.topTiles:
+        if model == "Astra 6737i":
             self.pageTileSetup(self.modelLayout.getTopKeyFrame(), self.listManager.topTiles)
 
         self.nextPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nnext page', height = 4, width = 10)
@@ -67,7 +68,7 @@ class PageLayout:
 
 
     def draw(self, tiles):
-        if self.listManager.topTiles:
+        if self.model == "Astra 6737i":
             self.modelLayout.draw(tiles, self.listManager.getPageCount(), self.listManager.topTiles )
         else:
             self.modelLayout.draw(tiles, self.listManager.getPageCount())

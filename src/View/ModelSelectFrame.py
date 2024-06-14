@@ -39,13 +39,13 @@ class ModelSelectFrame(ttk.Frame):
         tk.Frame(self, width = 20).grid(column = 6, row = 4)
 
 
-
+    # Event listener for submit button
     def submit(self):
         print(phoneModels[self.clicked.get()])
         self.fm.initConfigFrame(self, self.clicked.get())
 
 
-
+    # Event listener for cancel button
     def cancel(self):
         print('cancel')
         sys.exit(0)
