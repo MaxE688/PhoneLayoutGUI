@@ -25,7 +25,7 @@ class FrameManager:
 
     # Creates the window for user to select the model of phone
     def initModelSelectFrame(self, frame):
-        self.root = self.createWindow(frame)
+        self.root: Root = self.createWindow(frame)
         self.modelSelectFrame = ModelSelectFrame(self)
         self.root.title(self.modelSelectFrame.title)
         self.root.center()
@@ -50,7 +50,7 @@ class FrameManager:
     # Creates the window for user to paste button config
     def initConfigFrame(self, frame, model):
 
-        self.root = self.createWindow(frame)
+        self.root: Root = self.createWindow(frame)
         self.model = model
         self.brand = phoneModels[model]['brand']
 
@@ -61,8 +61,8 @@ class FrameManager:
 
     # Create the window for user to edit buttons
     def initPhoneFrame(self, frame, configText):
-        self.root = self.createWindow(frame)
-        self.config = configText
+        self.root: Root = self.createWindow(frame)
+        self.config: str = configText
         self.tileFrameManager = TileFrameManager(self)
         self.root.title(self.tileFrameManager.title)
         self.root.createMenu(self)
