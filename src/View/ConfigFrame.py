@@ -35,7 +35,7 @@ class ConfigFrame(ttk.Frame):
     # Event listener for New Config button
     def newConfig(self):
         print("config Frame new config")
-        self.fm.initPhoneFrame(self, "")
+        # self.fm.initPhoneFrame(self, "")
 
 
     # Event listener for submit button

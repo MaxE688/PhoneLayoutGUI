@@ -1,4 +1,19 @@
+from enum import Enum
 
+class Brand(Enum):
+  AASTRA = "Aastra"
+  YEALINK = "Yealink"
+
+
+class Model(Enum):
+  AASTRA_6737 = "Aastra 6737i"
+  AASTRA_6739 = "Aastra 6739i"
+  YEALINK_T48 = "Yealink T48"
+  YEALINK_T46 = "Yealink T46"
+  YEALINK_T42 = "Yealink T42"
+  YEALINK_T41 = "Yealink T41"
+  YEALINK_EXP40 = "Yealink EXP40"
+  
 
 MAX_COL = 5
 MAX_ROW = 6
@@ -16,34 +31,35 @@ SELECT_MODEL_FRAME_WIDTH = "500"
 SELECT_MODEL_FRAME_HEIGHT = "200"
 
 
-
 phoneModels = {
-                "Astra 6737i":{
-                                "brand":"Astra",
-                                "tilesPerPage":12
-                              },
-                "Astra 6739i":{
-                                "brand":"Astra",
-                                "tilesPerPage":12
-                              },
-                "Yealink T48":{
-                                "brand":"Yealink",
-                                "tilesPerPage":30
-                              },
-                "Yealink T46":{
-                                "brand":"Yealink",
-                                "tilesPerPage":10
-                              },
-                "Yealink T42":{
-                                "brand":"Yealink",
-                                "tilesPerPage":6
-                              },
-                "Yealink T41":{
-                                "brand":"Yealink",
-                                "tilesPerPage":6
-                              },
-                "Yealink EXP40":{
-                                "brand":"Yealink",
-                                "tilesPerPage":20
-                              },
-              }
+  "Aastra 6737i":{
+                  "brand":Brand.AASTRA.value,
+                  "tilesPerPage":12
+                },
+  "Aastra 6739i":{
+                  "brand":Brand.AASTRA.value,
+                  "tilesPerPage":12
+                },
+  "Yealink T48":{
+                  "brand":Brand.YEALINK.value,
+                  "tilesPerPage":30
+                },
+  "Yealink T46":{
+                  "brand":Brand.YEALINK.value,
+                  "tilesPerPage":10
+                },
+  "Yealink T42":{
+                  "brand":Brand.YEALINK.value,
+                  "tilesPerPage":6
+                },
+  "Yealink T41":{
+                  "brand":Brand.YEALINK.value,
+                  "tilesPerPage":6
+                },
+  "Yealink EXP40":{
+                  "brand":Brand.YEALINK.value,
+                  "tilesPerPage":20
+                },
+}
+
+

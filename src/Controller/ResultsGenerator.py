@@ -1,4 +1,4 @@
-from Model.constants import phoneModels
+from Model.constants import Brand, Model, phoneModels
 
 class ResultsGenerator:
 
@@ -6,11 +6,11 @@ class ResultsGenerator:
         brand = phoneModels[model]["brand"]
         self.strings = ""
         match(brand):
-            case "Astra":
+            case Brand.AASTRA.value:
                 self.setAastraID(tileList)
                 self.strings = self.astra(tileList)
-            case "Yealink":
-                if model == "Yealink EXP40":
+            case Brand.YEALINK.value:
+                if model == Model.YEALINK_EXP40.value:
                     self.setEXP40ID(tileList)
                 else:
                     self.setYealinkID(tileList)

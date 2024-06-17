@@ -1,7 +1,7 @@
 
 import tkinter as tk
 import re
-from Model.constants import phoneModels
+from Model.constants import Brand, phoneModels
 from View.EditTileFrame import EditTileFrame
 
 class EditTileManager:
@@ -77,9 +77,9 @@ class EditTileManager:
 
 
     def getTypeOpts(self):
-        if self.brand == "Astra":
+        if self.brand == Brand.AASTRA.value:
             return self.astraTypeOptions()
-        elif self.brand == "Yealink":
+        elif self.brand == Brand.YEALINK.value:
             return self.yealinkTypeOptions()
 
 
@@ -101,9 +101,9 @@ class EditTileManager:
     def getCurrOpt(self):
         print(self.tile.type)
         print(type(self.tile.type))
-        if self.brand == "Astra":
+        if self.brand == Brand.AASTRA.value:
             return str(self.tile.type)
-        elif self.brand == "Yealink":
+        elif self.brand == Brand.YEALINK.value:
             option = str(self.tile.type) + ": "
             if type(self.tile.type) != "int":
                 option += str(self.typeOptions[int(self.tile.type)])
@@ -117,9 +117,9 @@ class EditTileManager:
 
 
     def updateTile(self, type, line, value, label):
-        if self.brand == "Astra":
+        if self.brand == Brand.AASTRA.value:
             self.tile.type = type
-        elif self.brand == "Yealink":
+        elif self.brand == Brand.YEALINK.value:
             self.tile.type = re.match("\d+", type)[0]
         self.tile.line = line
         self.tile.value = value

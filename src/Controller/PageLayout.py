@@ -6,7 +6,7 @@ from Model.T42 import T42
 from Model.T46 import T46
 from Model.T48 import T48
 from Model.EXP40 import EXP40
-from Model.constants import phoneModels
+from Model.constants import Model, phoneModels
 from Controller.ListManager import ListManager
 from Model.PageTile import PageTile
 from Controller.EditTileManager import EditTileManager
@@ -30,7 +30,7 @@ class PageLayout:
         # Draws widgets to PageFrame
         self.modelLayout = self.getModelLayout(model, self.pageFrame)
         # if self.modelLayout.topTiles:
-        if model == "Astra 6737i":
+        if model == Model.AASTRA_6737:
             self.pageTileSetup(self.modelLayout.getTopKeyFrame(), self.listManager.topTiles)
 
         self.nextPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nnext page', height = 4, width = 10)
@@ -50,25 +50,25 @@ class PageLayout:
 
     def getModelLayout(self, model, parent):
         match(model):
-            case "Astra 6737i":
+            case Model.AASTRA_6737.value:
                 return A37(self, parent, self.listManager.topTiles)
-            case "Astra 6739i":
+            case Model.AASTRA_6739.value:
                 return A39(self, parent)
-            case "Yealink T48":
+            case Model.YEALINK_T48.value:
                 return T48(self, parent)
-            case "Yealink T46":
+            case Model.YEALINK_T46.value:
                 return T46(self, parent)
-            case "Yealink T42":
+            case Model.YEALINK_T42.value:
                 return T42(self, parent)
-            case "Yealink T41":
+            case Model.YEALINK_T41.value:
                 return T42(self, parent)
-            case "Yealink EXP40":
+            case Model.YEALINK_EXP40.value:
                 return EXP40(self, parent)
 
 
 
     def draw(self, tiles):
-        if self.model == "Astra 6737i":
+        if self.model == Model.AASTRA_6737.value:
             self.modelLayout.draw(tiles, self.listManager.getPageCount(), self.listManager.topTiles )
         else:
             self.modelLayout.draw(tiles, self.listManager.getPageCount())
@@ -184,7 +184,12 @@ class PageLayout:
 
 
 
-    def pageTileSetup(self, parent, tiles):
+    def pageTileSetup(self, parent, tiles: list[PageTile], topTiles: list[PageTile] = []):
+        # for tile in topTiles:
+        #     tile.setParent(parent)
+        #     self.mouseManager.addDraggable(tile)
+        #     self.mouseManager.addEditable(tile)
+
         for tile in tiles:
             tile.setParent(parent)
             self.mouseManager.addDraggable(tile)

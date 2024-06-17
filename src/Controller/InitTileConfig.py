@@ -11,6 +11,7 @@ TODO:
 import re
 from Model.Tile import Tile
 from Model.NewConfiguration import NewConfiguration
+from Model.constants import Brand, Model
 
 class InitTileConfig:
     
@@ -35,7 +36,7 @@ class InitTileConfig:
         self.exp40Group = None
         self.btnGroup = None
 
-        if self.brand == "Astra":
+        if self.brand == Brand.AASTRA.value:
             keyStr = r"(?P<id>softkey\d+)"
             typeStr = r"type: *(?P<type>\w+ *[^\st])"
             lineStr = r"line: *(?P<line>\d+)"
@@ -45,12 +46,12 @@ class InitTileConfig:
 
             topBtnGroupRegx = re.compile(r"((topsoftkey\d+ \w+: *.* *\d*\n){3,4})\n")
             btnGroupRegx = re.compile(r"(((?<=[^p])softkey\d+ \w+: *.* *\d*\n?){1,4})\n*")
-            if self.model == "Astra 6737i":
+            if self.model == Model.AASTRA_6737.value:
                 self.topBtnGroup = topBtnGroupRegx.findall(self.cfg)
             
             self.btnGroup = btnGroupRegx.findall(self.cfg)
 
-        elif self.brand == "Yealink":
+        elif self.brand == Brand.YEALINK.value:
 
             keyStr = r"(?P<id>linekey.\d+)"
             typeStr = r".type *= *(?P<type>\w+)"

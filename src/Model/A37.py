@@ -37,6 +37,7 @@ class A37:
                 col = 4
             else:
                 col = 0
+            print(type(tile))
             tile.grid(column = col, row = row)
 
 
@@ -49,7 +50,7 @@ class A37:
             else:
                 col = 0
             tile.grid(column = col, row = row)
-
+            
 
 
     def draw(self, tiles, pageCount, topKeys = None):

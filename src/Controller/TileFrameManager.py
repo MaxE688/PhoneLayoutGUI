@@ -1,9 +1,7 @@
-
-import math
 from Controller.PageFrameManager import PageFrameManager
 from View.FooterFrame import FooterFrame
 from View.PageFrame import PageFrame
-from Model.constants import phoneModels
+from Model.constants import Model, phoneModels
 from Controller.InitTileConfig import *
 from Controller.ListManager import ListManager
 
@@ -26,7 +24,7 @@ class TileFrameManager:
         self.pageCount = self.listManager.getPageCount() 
         self.tilesPerPage = self.calcTilesPerPage(self.pageCount, tilesPerPage)
 
-        if self.model == "Astra 6737i":
+        if self.model == Model.AASTRA_6737.value:
             self.listManager.setTopTiles()
 
         if self.pageCount < 1: self.pageCount = 1

@@ -1,4 +1,4 @@
-from Model.constants import phoneModels
+from Model.constants import Brand, Model, phoneModels
 
 class NewConfiguration:
 
@@ -6,9 +6,9 @@ class NewConfiguration:
         cfg = ""
         tilesRange = phoneModels[model]['tilesPerPage'] + 1
                 
-        if phoneModels[model]["brand"] == "Astra":
+        if phoneModels[model]["brand"] == Brand.AASTRA.value:
             
-            if model == "Astra 6737i":
+            if model == Model.AASTRA_6737.value:
                 #return 6 topsoftkeys, and 3 softkeys
                 tilesRange = 7
                 for i in range(1, 7):
@@ -26,7 +26,7 @@ class NewConfiguration:
                 )
             
 
-        elif phoneModels[model]["brand"] == "Yealink":
+        elif phoneModels[model]["brand"] == Brand.YEALINK.value:
             
             for i in range(tilesRange):
                 cfg += (
