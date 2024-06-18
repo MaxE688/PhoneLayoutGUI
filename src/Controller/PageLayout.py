@@ -1,4 +1,5 @@
 import tkinter as tk
+from Controller.PageFrameManager import PageFrameManager
 from Model.Tile import Tile
 from Model.A37 import A37
 from Model.A39 import A39
@@ -15,7 +16,7 @@ from Controller.MouseManager import MouseManager
 
 class PageLayout:
 
-    def __init__(self, pageFrameManager, tilePageContainerFrame, model, listManager:ListManager):
+    def __init__(self, pageFrameManager: PageFrameManager, tilePageContainerFrame, model: str, listManager:ListManager):
         self.pageFrameManager = pageFrameManager
         self.parent = tilePageContainerFrame
         self.model = model
@@ -184,12 +185,8 @@ class PageLayout:
 
 
 
-    def pageTileSetup(self, parent, tiles: list[PageTile], topTiles: list[PageTile] = []):
-        # for tile in topTiles:
-        #     tile.setParent(parent)
-        #     self.mouseManager.addDraggable(tile)
-        #     self.mouseManager.addEditable(tile)
-
+    def pageTileSetup(self, parent, tiles: list[PageTile]):
+        
         for tile in tiles:
             tile.setParent(parent)
             self.mouseManager.addDraggable(tile)
