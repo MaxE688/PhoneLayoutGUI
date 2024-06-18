@@ -29,7 +29,7 @@ class PageLayout:
 
         # Draws widgets to PageFrame
         self.modelLayout = self.getModelLayout(model, self.pageFrame)
-        # if self.modelLayout.topTiles:
+        
         if model == Model.AASTRA_6737.value:
             self.pageTileSetup(self.modelLayout.getTopKeyFrame(), self.listManager.topTiles)
 
@@ -38,7 +38,6 @@ class PageLayout:
         self.reservedLabel = tk.Label(  self.pageFrame, relief = tk.RAISED, text = 'Reserved', height = 4, width = 10)
         self.deleteTile = tk.Label(     self.pageFrame, relief = tk.RAISED, text = 'Delete Button', height  = 4, width = 10)
         self.addTile = tk.Button(       self.pageFrame, text = 'Add Button', command = self.addNewTile)
-        # self.printBtn = tk.Button(      self.pageFrame, text = "Print Children", command = self.listManager.test)
         self.printBtn = tk.Button(      self.pageFrame, text = "Print Children", command = self.pageFrame.test)
 
 

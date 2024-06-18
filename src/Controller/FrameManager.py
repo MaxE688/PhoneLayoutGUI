@@ -1,7 +1,6 @@
 """
 ToDo:
     Root.py:
-        - implement New Config option in Menu
         - Style:
             - SelectModelFrame
             - ConfigFrame
@@ -71,7 +70,7 @@ class FrameManager:
 
     # Converts the button arrangement to text for final frame
     def generateResults(self, listManager):
-        self.resultsGenerator = ResultsGenerator(listManager.tiles, self.model)
+        self.resultsGenerator = ResultsGenerator(listManager, self.model)
         self.results = self.resultsGenerator.getStrings()
         self.resultsFrame()
 

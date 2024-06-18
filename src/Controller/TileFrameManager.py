@@ -1,3 +1,4 @@
+from Controller import FrameManager
 from Controller.PageFrameManager import PageFrameManager
 from View.FooterFrame import FooterFrame
 from View.PageFrame import PageFrame
@@ -9,7 +10,7 @@ class TileFrameManager:
 
     def __init__(self, frameManager):
 
-        self.frameManager = frameManager
+        self.frameManager: FrameManager = frameManager
         self.root = frameManager.root
         self.model = frameManager.model
         cfg = frameManager.config

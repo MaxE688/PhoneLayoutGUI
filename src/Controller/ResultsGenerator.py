@@ -1,20 +1,28 @@
+from Controller.ListManager import ListManager
+from Model.Tile import Tile
 from Model.constants import Brand, Model, phoneModels
 
 class ResultsGenerator:
 
-    def __init__(self, tileList, model):
+    def __init__(self, listManager: ListManager, model: str):
         brand = phoneModels[model]["brand"]
         self.strings = ""
         match(brand):
             case Brand.AASTRA.value:
-                self.setAastraID(tileList)
-                self.strings = self.astra(tileList)
+                tiles = []
+                if model == Model.AASTRA_6737.value:
+                    for tile in listManager.topTiles:
+                        tiles.append(tile.tile)
+                tiles.extend(listManager.tiles)
+
+                self.setAastraID(tiles)
+                self.strings = self.astra(tiles)
             case Brand.YEALINK.value:
                 if model == Model.YEALINK_EXP40.value:
-                    self.setEXP40ID(tileList)
+                    self.setEXP40ID(listManager.tiles)
                 else:
-                    self.setYealinkID(tileList)
-                self.strings = self.yealink(tileList)
+                    self.setYealinkID(listManager.tiles)
+                self.strings = self.yealink(listManager.tiles)
 
 
 
@@ -22,9 +30,9 @@ class ResultsGenerator:
         buttonStrings = []
 
         for tile in tileList:
-            button = (str(tile.id) + "." + "type = " + str(tile.type) + "\n" +  
-                      str(tile.id) + "." + "label = " + str(tile.label) + "\n" +
-                      str(tile.id) + "." + "value = " + str(tile.value) + "\n")
+            button = (str(tile.id) + "." + "type: " + str(tile.type) + "\n" +  
+                      str(tile.id) + "." + "label: " + str(tile.label) + "\n" +
+                      str(tile.id) + "." + "value: " + str(tile.value) + "\n")
             buttonStrings.append(button) 
         return buttonStrings
 
@@ -44,10 +52,20 @@ class ResultsGenerator:
 
 
 
-    def setAastraID(self, tileList):
+    def setAastraID(self, tileList: list[Tile]):
+        topKey = 0
+        softkey = 0
         for i, tile in enumerate(tileList):
-            key = i + 1
-            tile.id = "softkey" + str(key)
+            if tile.id[:3] == "top":
+                keyType = "topsoftkey"
+                topKey += 1
+                key = topKey
+            else:
+                keyType = "softkey"
+                softkey += 1
+                key = softkey
+            
+            tile.id = keyType + str(key)
 
 
 

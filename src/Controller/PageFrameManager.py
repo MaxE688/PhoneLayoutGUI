@@ -24,7 +24,6 @@ class PageFrameManager:
 
     def finish(self):
         self.tileFrameManager.generateResults()
-        pass
 
 
 
