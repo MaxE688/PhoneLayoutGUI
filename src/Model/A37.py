@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from Model.PageTile import PageTile
+
 class A37:
 
     def __init__(self, layoutManager, parent, topTiles):
@@ -30,7 +32,7 @@ class A37:
     
 
 
-    def drawTopKeys(self, tiles):
+    def drawTopKeys(self, tiles: list[PageTile]):
         for i, tile in enumerate(tiles):
             row = i % 3
             if i >= 3:
@@ -42,7 +44,7 @@ class A37:
 
 
 
-    def drawKeys(self, tiles):
+    def drawKeys(self, tiles: list[PageTile]):
         for i, tile in enumerate(tiles):
             row = (i % 3) + 3
             if i >= 3:

@@ -10,7 +10,7 @@ class ListManager:
   def __init__(self, tiles: List, model):
     self.tiles = tiles
     self.model = model
-    self.tilesPerPage = phoneModels[model]["tilesPerPage"]\
+    self.tilesPerPage = phoneModels[model]["tilesPerPage"]
     
 
 
@@ -21,14 +21,18 @@ class ListManager:
 
   def setTopTiles(self):
     self.topTiles = []
-    for i, tile in enumerate(self.tiles):
+    for i, tile in enumerate(list(self.tiles)):
       if tile.id[:3] == "top":
+        if self.tiles.count(tile) > 0:
+          self.tiles.remove(tile)
         pTile = PageTile(i, tile)
         self.topTiles.append(pTile)    
 
-    for t in self.topTiles:
-      if t.tile.id[:3] == "top" and self.tiles.count(t) > 0:
-        self.tiles.remove(t)
+    # for t in self.topTiles:
+    #   if t.tile.id[:3] == "top" and self.tiles.count(t) > 0:
+    #     self.tiles.remove(t)
+
+    print()
 
 
 
