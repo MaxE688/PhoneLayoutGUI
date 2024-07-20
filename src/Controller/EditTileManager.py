@@ -124,6 +124,7 @@ class EditTileManager:
         self.tile.line = line
         self.tile.value = value
         self.tile.label = label
+        #self.tile.setLabel(label)
 
 
 

@@ -1,5 +1,5 @@
 import tkinter as tk
-from Controller.PageFrameManager import PageFrameManager
+#from Controller.PageFrameManager import PageFrameManager
 from Model.Tile import Tile
 from Model.A37 import A37
 from Model.A39 import A39
@@ -16,7 +16,7 @@ from Controller.MouseManager import MouseManager
 
 class PageLayout:
 
-    def __init__(self, pageFrameManager: PageFrameManager, tilePageContainerFrame, model: str, listManager:ListManager):
+    def __init__(self, pageFrameManager, tilePageContainerFrame, model: str, listManager:ListManager):
         self.pageFrameManager = pageFrameManager
         self.parent = tilePageContainerFrame
         self.model = model
@@ -69,8 +69,8 @@ class PageLayout:
 
     def draw(self, tiles):
         if self.model == Model.AASTRA_6737.value:
-            temp = self.listManager.topTiles
-            self.modelLayout.draw(tiles, self.listManager.getPageCount(), self.listManager.topTiles )
+            topTiles = self.listManager.getTopTiles()
+            self.modelLayout.draw(tiles, self.listManager.getPageCount(), topTiles )
         else:
             self.modelLayout.draw(tiles, self.listManager.getPageCount())
 
@@ -180,8 +180,8 @@ class PageLayout:
 
 
 
-    def submitEdit(self, pageTile):
-        self.redraw(self.pageFrame, self.listManager.getPageFirstTile(pageTile))
+    def submitEdit(self, pageTileIndex):
+        self.redraw(self.pageFrame, self.listManager.getPageFirstTile(pageTileIndex))
 
 
 

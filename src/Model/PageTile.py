@@ -34,6 +34,7 @@ class PageTile(tk.Label):
 
 
    def setLabel(self, label):
+      print("set label");
       self.label.set(label)
 
 

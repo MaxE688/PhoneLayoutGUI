@@ -34,6 +34,11 @@ class ListManager:
 
     print()
 
+  def getTopTiles(self):
+    for i, tile in enumerate(self.topTiles):
+      tile.updateValues(i, tile.tile, tile.tile.label)
+    return self.topTiles
+
 
 
   def createPageTiles(self, startIndex, pageSize):
