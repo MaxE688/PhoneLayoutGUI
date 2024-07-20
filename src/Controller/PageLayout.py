@@ -123,8 +123,8 @@ class PageLayout:
 
         self.listManager.addTile(newTile)
         lastIndex = len(self.listManager.tiles) - 1
-        pageFirstTile = self.listManager.getPageFirstTile(lastIndex) 
-        self.redraw(self.pageFrame, pageFirstTile)
+        pageFirstTileIndex = self.listManager.getPageFirstTile(lastIndex) 
+        self.redraw(self.pageFrame, pageFirstTileIndex)
 
 
 

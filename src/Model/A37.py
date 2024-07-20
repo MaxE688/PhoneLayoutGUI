@@ -26,7 +26,7 @@ class A37:
     def getSoftKeys(self, pageTiles):
         keys = []
         for page in pageTiles:
-            if page.tile.id[0:4] == "soft":
+            if page.tile.id[0:3] != "top":
                 keys.append(page)
         return keys
     
@@ -39,7 +39,7 @@ class A37:
                 col = 4
             else:
                 col = 0
-            print(type(tile))
+            #print(type(tile))
             tile.grid(column = col, row = row)
 
 
@@ -61,7 +61,7 @@ class A37:
         self.drawKeys(softkeys)
 
         if pageCount > 1:
-            self.layoutManager.reservedLabel.grid(column = 4, row = 5)
+            #self.layoutManager.reservedLabel.grid(column = 4, row = 5)
             self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2)
             self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)
         self.layoutManager.deleteTile.grid(column = 2, row = 3, columnspan = 2)

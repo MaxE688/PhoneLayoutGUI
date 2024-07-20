@@ -34,7 +34,7 @@ SELECT_MODEL_FRAME_HEIGHT = "200"
 phoneModels = {
   "Aastra 6737i":{
                   "brand":Brand.AASTRA.value,
-                  "tilesPerPage":12
+                  "tilesPerPage":6
                 },
   "Aastra 6739i":{
                   "brand":Brand.AASTRA.value,
