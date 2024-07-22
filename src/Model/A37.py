@@ -62,9 +62,9 @@ class A37:
 
         if pageCount > 1:
             self.layoutManager.reservedLabel.grid(column = 4, row = 5)
-            self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2)
-            self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)
-        self.layoutManager.deleteTile.grid(column = 2, row = 3, columnspan = 2)
+            self.layoutManager.nextPageTile.grid(column = 3, row = 2, rowspan = 2)
+            self.layoutManager.prevPageTile.grid(column = 2, row = 2, rowspan = 2)
+        self.layoutManager.deleteTile.grid(column = 2, row = 4, columnspan = 2)
         self.layoutManager.addTile.grid(column = 2, row = 1, columnspan = 2)
         self.layoutManager.printBtn.grid(column = 2, row = 6, columnspan = 2)
         self.f1.grid(column = 2, row = 0, sticky = "nesw")
