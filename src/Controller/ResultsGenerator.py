@@ -30,9 +30,9 @@ class ResultsGenerator:
         buttonStrings = []
 
         for tile in tileList:
-            button = (str(tile.id) + "." + "type: " + str(tile.type) + "\n" +  
-                      str(tile.id) + "." + "label: " + str(tile.label) + "\n" +
-                      str(tile.id) + "." + "value: " + str(tile.value) + "\n")
+            button = (str(tile.id) + " " + "type: " + str(tile.type) + "\n" +  
+                      str(tile.id) + " " + "label: " + str(tile.label) + "\n" +
+                      str(tile.id) + " " + "value: " + str(tile.value) + "\n")
             buttonStrings.append(button) 
         return buttonStrings
 

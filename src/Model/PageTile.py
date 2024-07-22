@@ -32,7 +32,7 @@ class PageTile(tk.Label):
       self.tile = tile
 
 
-
+   # TODO: is this needed?
    def setLabel(self, label):
       print("set label");
       self.label.set(label)

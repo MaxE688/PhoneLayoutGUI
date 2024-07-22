@@ -61,7 +61,7 @@ class A37:
         self.drawKeys(softkeys)
 
         if pageCount > 1:
-            #self.layoutManager.reservedLabel.grid(column = 4, row = 5)
+            self.layoutManager.reservedLabel.grid(column = 4, row = 5)
             self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2)
             self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)
         self.layoutManager.deleteTile.grid(column = 2, row = 3, columnspan = 2)

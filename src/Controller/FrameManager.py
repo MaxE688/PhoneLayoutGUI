@@ -1,14 +1,7 @@
 """
 ToDo:
-    add button on A37 is broken 
 
-
-    Root.py:
-        - Style:
-            - SelectModelFrame
-            - ConfigFrame
-            - FooterFrame
-            -
+    A37 Model Frame format breaks when the number of tiles change
 
 """
 from Model.constants import *
