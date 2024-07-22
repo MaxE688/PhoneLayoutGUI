@@ -94,7 +94,10 @@ class PageLayout:
 
 
     def nextPage(self):
-        nextPageIndex = self.pageFrame.activeTiles[-1].index + 1
+        if self.pageFrame.activeTiles:
+            nextPageIndex = self.pageFrame.activeTiles[-1].index + 1
+        else:
+            nextPageIndex = phoneModels[self.model].tilesPerPage - 1
         if nextPageIndex < len(self.listManager.tiles):
             self.redraw(self.pageFrame, nextPageIndex)
         pass

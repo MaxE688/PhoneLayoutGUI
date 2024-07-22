@@ -9,6 +9,7 @@ class PageFrame(ttk.Frame):
         super().__init__(parent)
 
         self.tiles = pageTiles
+        self.activeTiles = pageTiles
         self.pageLayout = pageLayout
 
 
