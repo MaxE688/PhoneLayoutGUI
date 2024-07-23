@@ -114,6 +114,7 @@ class PageLayout:
 
 
     def addNewTile(self):
+        print("addNewTile called")
         endTile = self.listManager.tiles[-1]
     
         newTile = Tile(

@@ -9,7 +9,7 @@ class T48:
         self.numOfRows = 6
 
         self.f = tk.Frame(parent, width=100)
-        self.f.grid(column = 2, row = 4)
+        #self.f.grid(column = 2, row = 4)
 
 
 
@@ -36,4 +36,4 @@ class T48:
             self.layoutManager.prevPageTile.grid(column = 1, row = 7, rowspan = 2)
         self.layoutManager.deleteTile.grid(column = 2, row = 7)
         self.layoutManager.addTile.grid(column = 2, row = 6)
-        self.f.grid(column = 2, row = 4, sticky = 'nesw')
+       # self.f.grid(column = 2, row = 4, sticky = 'nesw')

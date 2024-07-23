@@ -74,7 +74,6 @@ class FooterFrame(ttk.Frame):
 
 
     def cont(self):
-        print("continue")
         self.pageLayout.cont()
 
 
@@ -85,13 +84,10 @@ class FooterFrame(ttk.Frame):
 
 
     def nextPage(self):
-        print("next page")
         self.pageLayout.nextPage()
 
 
 
     def prevPage(self):
-        print("prev page")
-
         self.pageLayout.prevPage()
 

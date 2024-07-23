@@ -40,8 +40,11 @@ class PageFrame(ttk.Frame):
         self.activeTiles = []
 
         for i, tile in enumerate(tiles):
+            if i > 26:
+                pass
             if i >= len(self.tiles): 
                 updatedTile = PageTile(firstIndex + i, tile)
+                updatedTile.setParent(self.pageLayout.pageFrame)
                 self.pageLayout.setMouseManager(updatedTile)
             else:
                 self.tiles[i].updateValues( firstIndex + i, tile, tile.label)

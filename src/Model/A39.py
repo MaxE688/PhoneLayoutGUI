@@ -8,8 +8,8 @@ class A39:
         self.numOfRows = 6
         
 
-        self.f = tk.Frame(parent, width = 100)
-        self.f.grid(column = 2, row = 4)
+       # self.f = tk.Frame(parent, width = 100)
+        #self.f.grid(column = 2, row = 4)
 
 
 
@@ -28,4 +28,4 @@ class A39:
             self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)
         self.layoutManager.deleteTile.grid(column = 2, row = 3, columnspan = 2)
         self.layoutManager.addTile.grid(column = 2, row = 0, columnspan = 2)
-        self.f.grid(column = 2, row = 4, sticky = 'nesw')
+       # self.f.grid(column = 2, row = 4, sticky = 'nesw')
