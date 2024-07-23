@@ -28,7 +28,7 @@ class NewConfiguration:
 
         elif phoneModels[model]["brand"] == Brand.YEALINK.value:
             
-            for i in range(tilesRange):
+            for i in range(1, tilesRange):
                 cfg += (
                     "linekey." + str(i) + ".type = 0\n" +
                     "linekey." + str(i) + ".line = 1\n" +

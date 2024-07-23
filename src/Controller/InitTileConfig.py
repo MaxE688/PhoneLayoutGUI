@@ -41,7 +41,8 @@ class InitTileConfig:
             typeStr = r"type: *(?P<type>\w+ *[^\st])"
             lineStr = r"line: *(?P<line>\d+)"
             valueStr = r"value: *(?P<value>.+)"
-            labelStr = r"label: *(?P<label>\w+ *\w+)"
+            # labelStr = r"label: *(?P<label>\w+ *\w+)"
+            labelStr = r"label: *(?P<label>\w+( *\w*)*)"
 
 
             topBtnGroupRegx = re.compile(r"((topsoftkey\d+ \w+: *.* *\d*\n){3,4})\n")
@@ -57,7 +58,8 @@ class InitTileConfig:
             typeStr = r".type *= *(?P<type>\w+)"
             lineStr = r".line *= *(?P<line>\w+)"
             valueStr = r".value *= *(?P<value>\w+)"
-            labelStr = r".label *= *(?P<label>\w+ *\w*)"
+            # labelStr = r".label *= *(?P<label>\w+ *\w*)"
+            labelStr = r".label *= *(?P<label>\w+( *\w*)*)"
 
             exp40Group = re.compile(r"((expansion_module.\d.key.\d+.\w+ *= *.+\n){1,5})\n*") # expansion_module.\d.key.\d+
             btnGroupRegx = re.compile(r"((linekey.\d+.\w+ *= *.+\n){1,5})\n*")

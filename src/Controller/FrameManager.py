@@ -3,7 +3,6 @@ ToDo:
 
 
     T48 button layout is wrong
-    T48 new page function is wrong
 
 """
 from Model.constants import *
