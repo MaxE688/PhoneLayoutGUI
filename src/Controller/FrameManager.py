@@ -54,6 +54,13 @@ class FrameManager:
         self.root.title(self.configFrame.title)
         self.root.center()
 
+    
+    def newConfigFrame(self, frame):
+        self.root: Root = self.createWindow(frame)
+        self.configFrame = ConfigFrame(self)
+        self.root.title(self.configFrame.title)
+        self.root.center()
+
 
     # Create the window for user to edit buttons
     def initPhoneFrame(self, frame, configText):

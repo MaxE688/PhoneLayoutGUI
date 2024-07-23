@@ -46,18 +46,17 @@ class Root(tk.Tk):
         fm.root.config(menu = menuBar)
 
 
-    # TODO: Functionality incomplete
+    
     # Go back to window for user to enter new config text
     def newCfg(self):
-        print("Creating new configuration...")
-        self.fm.configFrame(None, self.fm.model)
+        self.fm.newConfigFrame(self.children['!frame'])
 
 
 
     # TODO: Functionality incomplete
     # Go back to window for user to select phone model
     def selectModel(self):
-        self.fm.selectModelFrame(None)
+        self.fm.initModelSelectFrame(None)
 
 
     # Exit application
