@@ -162,3 +162,8 @@ cython_debug/
 
 # Test file
 test.html
+
+# ignore vscode config files
+launch.json
+.vscode/
+src/.vscode/
