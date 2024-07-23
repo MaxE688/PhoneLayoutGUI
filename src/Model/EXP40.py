@@ -1,17 +1,19 @@
 import tkinter as tk
-from tkinter import ttk
-from Model.Tile import Tile
-
 
 class EXP40:
+
     def __init__(self, layoutManager, parent):
 
         self.parent = parent
         self.layoutManager = layoutManager
         self.numOfRows = 10
 
+        self.f = tk.Frame(parent, width = 100)
+        self.f.grid(column = 2, row = 4)
 
-    def draw(self, tiles):
+
+
+    def draw(self, tiles, pageCount):
 
         for i, tile in enumerate(tiles):
             row = i % self.numOfRows
@@ -22,7 +24,7 @@ class EXP40:
             tile.grid(column = col, row = row)
         #Put tiles in right spot
 
-        if(self.parent.frameManager.pageCount > 1):
+        if(pageCount > 1):
             self.layoutManager.reservedLabel.grid(column = 4, row = 9)
             self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2)
             self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)

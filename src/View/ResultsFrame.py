@@ -3,7 +3,9 @@ from tkinter import ttk
 
 
 class ResultsFrame(ttk.Frame):
+    
     def __init__(self, parent, resultString):
+
         super().__init__(parent)
         self.pack()
 

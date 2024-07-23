@@ -1,17 +1,31 @@
-# from View.EditTileFrame import EditTileFrame
-# from View.ModelFrame import ModelFrame
+from Model.PageTile import PageTile
 
 class MouseManager:
 
-    def __init__(self, modelFrame, tfManager):
-        self.modelFrame = modelFrame
-        self.tfm = tfManager
+    def __init__(self, pageLayout):
+        self.pageLayout = pageLayout
+        # self.tfm = tfManager
+
+
 
     def addDraggable(self, tile):
         tile.bind("<ButtonPress-1>", self.onStart)
         tile.bind("<B1-Motion>", self.onDrag)
         tile.bind("<ButtonRelease-1>", self.onDrop)
         tile.configure(cursor="hand1")
+
+
+
+    def addEditable(self, tile):
+        tile.bind("<Double-1>", self.edit)
+
+
+
+    def edit(self, event):
+        self.pageLayout.editTile(event.widget)
+        print("Edit me!")
+
+
 
     def onStart(self, event):
         print("button press")
@@ -24,6 +38,7 @@ class MouseManager:
         self.startRow = widget.grid_info()['row']
 
 
+
     def onDrag(self, event):
 
         widget = event.widget
@@ -31,21 +46,23 @@ class MouseManager:
         self.x = widget.winfo_x() - self.startX + event.x
         self.y = widget.winfo_y() - self.startY + event.y
 
-        self.modelFrame.drag(widget, self.x, self.y)
+        self.pageLayout.drag(widget, self.x, self.y)
+
+
 
     def onDrop(self, event):
 
-        widget = event.widget
+        widget: PageTile = event.widget
 
-        x = self.modelFrame.winfo_rootx() + (widget.winfo_x() + event.x)
-        y = self.modelFrame.winfo_rooty() + (widget.winfo_y() + event.y)
+        x = widget.parent.winfo_rootx() + (widget.winfo_x() + event.x)
+        y = widget.parent.winfo_rooty() + (widget.winfo_y() + event.y)
+        
+        print("x = widget.parent.winfo_rootx() + (widget.winfo_x() + event.x)")
+        print("y = widget.parent.winfo_rooty() + (widget.winfo_y() + event.y)")
+        print()
+        print( str(x) + " = " + str(widget.parent.winfo_rootx()) + " + (" + str(widget.winfo_x()) + " + " + str(event.x) + ")")
+        print( str(y) + " = " + str(widget.parent.winfo_rooty()) + " + (" + str(widget.winfo_y()) + " + " + str(event.y) + ")")
 
-        self.modelFrame.drop(widget, x, y, self.startCol, self.startRow)
+        self.pageLayout.drop(widget, x, y, self.startCol, self.startRow)
 
 
-    def addEditable(self, tile):
-        tile.bind("<Double-1>", self.edit)
-
-    def edit(self, event):
-        self.modelFrame.editTile(event.widget)
-        print("Edit me!")

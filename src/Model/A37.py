@@ -1,45 +1,50 @@
 import tkinter as tk
-from tkinter import ttk
-from Model.Tile import Tile
+
+from Model.PageTile import PageTile
 
 class A37:
-    def __init__(self, layoutManager, parent):
+
+    def __init__(self, layoutManager, parent, topTiles):
         self.parent = parent
         self.layoutManager = layoutManager
         self.numOfRows = 6
-        # self.topkeys = self.getTopKeys(layoutManager.parent.frameManager.tilePageFrames[0], 'top')
-        self.topkeys = self.getKeys( 'top')
+        self.topTiles = topTiles
+       
+        self.f1 = tk.Frame(parent, width = 100)
+        self.f1.grid(column = 2, row = 3)
 
-    def getTopKeys(self, page):
+        self.f2 = tk.Frame(parent, width = 100)
+        self.f2.grid(column = 2, row = 4)
+
+
+  
+    def getTopKeyFrame(self):
+        return self.f1
+
+
+
+    def getSoftKeys(self, pageTiles):
         keys = []
-        for tile in page.tiles:
-            if tile.id[0:3] == 'top':
-                keys.append(tile)
+        for page in pageTiles:
+            if page.tile.id[0:3] != "top":
+                keys.append(page)
         return keys
+    
 
-    def getKeys(self, key):
-        keys = []
-        match(key):
-            case 'top':
-                for tile in self.layoutManager.tiles:
-                    if tile.id[0:3] == key:
-                        keys.append(tile)
-            case 'soft':
-                for tile in self.layoutManager.tiles:
-                    if tile.id[0:4] == key:
-                        keys.append(tile)
-        return keys
 
-    def drawTopKeys(self, tiles):
+    def drawTopKeys(self, tiles: list[PageTile]):
         for i, tile in enumerate(tiles):
             row = i % 3
             if i >= 3:
                 col = 4
             else:
                 col = 0
+            #print(type(tile))
             tile.grid(column = col, row = row)
 
-    def drawKeys(self, tiles):
+
+
+    def drawKeys(self, tiles: list[PageTile]):
         for i, tile in enumerate(tiles):
             row = (i % 3) + 3
             if i >= 3:
@@ -47,17 +52,22 @@ class A37:
             else:
                 col = 0
             tile.grid(column = col, row = row)
+            
 
 
-    def draw(self, tiles):
-        self.drawTopKeys(self.topkeys)
-        softkeys = self.getKeys('soft')
+    def draw(self, tiles, pageCount, topKeys = None):
+        softkeys = self.getSoftKeys(tiles)
+        self.drawTopKeys(topKeys)
         self.drawKeys(softkeys)
 
-        if self.parent.frameManager.pageCount > 1:
+        if pageCount > 1:
             self.layoutManager.reservedLabel.grid(column = 4, row = 5)
-            self.layoutManager.nextPageTile.grid(column = 3, row = 1, rowspan = 2)
-            self.layoutManager.prevPageTile.grid(column = 2, row = 1, rowspan = 2)
-        self.layoutManager.deleteTile.grid(column = 2, row = 3, columnspan = 2)
-        self.layoutManager.addTile.grid(column = 2, row = 0, columnspan = 2)
+            self.layoutManager.nextPageTile.grid(column = 3, row = 2, rowspan = 2)
+            self.layoutManager.prevPageTile.grid(column = 2, row = 2, rowspan = 2)
+        self.layoutManager.deleteTile.grid(column = 2, row = 4, columnspan = 2)
+        self.layoutManager.addTile.grid(column = 2, row = 1, columnspan = 2)
         self.layoutManager.printBtn.grid(column = 2, row = 6, columnspan = 2)
+        self.f1.grid(column = 2, row = 0, sticky = "nesw")
+        self.f2.grid(column = 2, row = 4, sticky = "nesw")
+
+    

@@ -1,4 +1,5 @@
 import tkinter as tk
+#from Controller.PageFrameManager import PageFrameManager
 from Model.Tile import Tile
 from Model.A37 import A37
 from Model.A39 import A39
@@ -6,104 +7,200 @@ from Model.T42 import T42
 from Model.T46 import T46
 from Model.T48 import T48
 from Model.EXP40 import EXP40
+from Model.constants import Model, phoneModels
+from Controller.ListManager import ListManager
+from Model.PageTile import PageTile
+from Controller.EditTileManager import EditTileManager
+from View.PageFrame import PageFrame
+from Controller.MouseManager import MouseManager
 
 class PageLayout:
-    def __init__(self, parent, model, tiles):
-        self.parent = parent
+
+    def __init__(self, pageFrameManager, tilePageContainerFrame, model: str, listManager:ListManager):
+        self.pageFrameManager = pageFrameManager
+        self.parent = tilePageContainerFrame
         self.model = model
-        self.tiles = tiles
+        self.listManager = listManager
+        self.currentPage = 0
+        tileLabels = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
+        self.mouseManager = MouseManager(self)
 
-        self.tilePage = self.getTilePageFrame(model, parent)
-        # if isinstance(self.tilePage, A37):
-        #     self.parent.
+        self.pageFrame = PageFrame(self.parent, self, tileLabels)
+        self.pageTileSetup(self.pageFrame, tileLabels)
 
-        self.nextPageTile = tk.Label(parent, relief = tk.RAISED, text = 'Move to\nnext page', height = 4, width = 10)
-        self.prevPageTile = tk.Label(parent, relief = tk.RAISED, text = 'Move to\nprev page', height = 4, width = 10)
-        self.reservedLabel = tk.Label(parent, relief = tk.RAISED, text = 'Reserved', height = 4, width = 10)
-        self.deleteTile = tk.Label(parent, relief = tk.RAISED, text = 'Delete Button', height  = 4, width = 10)
-        self.addTile = tk.Button(parent, text = 'Add Button', command = self.parent.addTile)
-        self.printBtn = tk.Button(parent, text = "Print Children", command = self.parent.test)
+        # Draws widgets to PageFrame
+        self.modelLayout = self.getModelLayout(model, self.pageFrame)
+        
+        if model == Model.AASTRA_6737.value:
+            self.pageTileSetup(self.modelLayout.getTopKeyFrame(), self.listManager.topTiles)
+
+        self.nextPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nnext page', height = 4, width = 10)
+        self.prevPageTile = tk.Label(   self.pageFrame, relief = tk.RAISED, text = 'Move to\nprev page', height = 4, width = 10)
+        self.reservedLabel = tk.Label(  self.pageFrame, relief = tk.RAISED, text = 'Reserved', height = 4, width = 10)
+        self.deleteTile = tk.Label(     self.pageFrame, relief = tk.RAISED, text = 'Delete Button', height  = 4, width = 10)
+        self.addTile = tk.Button(       self.pageFrame, text = 'Add Button', command = self.addNewTile)
+        self.printBtn = tk.Button(      self.pageFrame, text = "Print Children", command = self.pageFrame.test)
 
 
-        if self.tilePage.__class__.__name__ == "A37":
-            self.tilePage.topkeys = self.tilePage.getTopKeys(self)
+        
+        self.draw(self.pageFrame.getTiles())
+        self.pageFrame.create()
 
-        self.tilePage.draw(self.tiles)
 
 
-    def getTilePageFrame(self, model, parent):
+    def getModelLayout(self, model, parent):
         match(model):
-            case "Astra 6737i":
-                return A37(self, parent)
-            case "Astra 6739i":
+            case Model.AASTRA_6737.value:
+                return A37(self, parent, self.listManager.topTiles)
+            case Model.AASTRA_6739.value:
                 return A39(self, parent)
-            case "Yealink T48":
+            case Model.YEALINK_T48.value:
                 return T48(self, parent)
-            case "Yealink T46":
+            case Model.YEALINK_T46.value:
                 return T46(self, parent)
-            case "Yealink T42":
+            case Model.YEALINK_T42.value:
                 return T42(self, parent)
-            case "Yealink T41":
+            case Model.YEALINK_T41.value:
                 return T42(self, parent)
-            case "Yealink EXP40":
+            case Model.YEALINK_EXP40.value:
                 return EXP40(self, parent)
 
 
-    def swapTilesNext(self, frame, tile):
-        incomingTile = self.copyTile(frame, tile)
-        firstTile = self.tiles.pop(0)
-        self.tiles.insert(0, incomingTile)
-        self.redraw(frame)
 
-        return firstTile
-
-    def swapTilesPrev(self, frame, tile):
-        incomingTile = self.copyTile(frame, tile)
-        lastTile = self.tiles.pop()
-        self.tiles.append(incomingTile)
-        self.redraw(frame)
-
-        return lastTile
-
-    def shiftTiles(self, tiles, dropped, crushed):
-        # self.tilePage.shiftTiles(tiles, dropped, crushed)
-        index = tiles.index(crushed)
-
-        if index >= len(tiles):
-            tiles.append(dropped)
+    def draw(self, tiles):
+        if self.model == Model.AASTRA_6737.value:
+            topTiles = self.listManager.getTopTiles()
+            self.modelLayout.draw(tiles, self.listManager.getPageCount(), topTiles )
         else:
-            tiles.insert(index, tiles.pop(tiles.index(dropped)))
+            self.modelLayout.draw(tiles, self.listManager.getPageCount())
 
-        if isinstance(self.tilePage, A37):
-            self.tiles = tiles
-            self.tilePage.topkeys = self.tilePage.getKeys('top')
-            self.tilePage.softkeys = self.tilePage.getKeys('soft')
 
-    def forget(self, page):
-        for child in page.winfo_children():
+
+    def forget(self):
+        for child in self.pageFrame.winfo_children():
             child.grid_forget()
 
-    def redraw(self, page):
-        # self.tilePage.forget(page)
-        self.forget(page)
 
-        if self.__class__.__name__ == 'A37':
-            self.tilePage.topkeys = self.tilePage.getTopKeys(self)
+
+    def redraw(self, page: PageFrame, pageFirstIndex):
+        self.forget()
+
+        self.pageFrameManager.updatePageLabel(self.listManager.getPageOfIndex(pageFirstIndex), self.listManager.getPageCount())
+        tiles = self.listManager.getPageTiles(pageFirstIndex)
+        pageTiles = page.updateLabels(pageFirstIndex, tiles)
+
+        self.draw(pageTiles)
+
+
+
+    def nextPage(self):
+        if self.pageFrame.activeTiles:
+            nextPageIndex = self.pageFrame.activeTiles[-1].index + 1
+        else:
+            nextPageIndex = phoneModels[self.model].tilesPerPage - 1
+        if nextPageIndex < len(self.listManager.tiles):
+            self.redraw(self.pageFrame, nextPageIndex)
+        pass
+
+
+
+    def prevPage(self):
+        prevPageIndex = self.pageFrame.activeTiles[0].index - 1
+        if prevPageIndex >= 0:
+            prevPageIndex = self.listManager.getPageFirstTile(prevPageIndex)
+            self.redraw(self.pageFrame, prevPageIndex)
+        pass
+
+
+
+    def addNewTile(self):
+        print("addNewTile called")
+        endTile = self.listManager.tiles[-1]
+    
+        newTile = Tile(
+            "",
+            "16",
+            "1",
+            "",
+            "New Tile"
+        )
+
+        self.listManager.addTile(newTile)
+        lastIndex = len(self.listManager.tiles) - 1
+        pageFirstTileIndex = self.listManager.getPageFirstTile(lastIndex) 
+        self.redraw(self.pageFrame, pageFirstTileIndex)
+
+
+
+    def editTile(self, tile):
+        EditTileManager(self, self.model, tile)
+
+
+
+    def drag(self, widget, x, y):
+        widget.place(x = x, y = y)
+
+
+
+    def drop(self, dropped, x, y, col, row):
+        droppedIndex = dropped.index
+        dropped.place_forget()
+        crushed = self.pageFrame.winfo_containing(x, y)
+
+        if isinstance(crushed, PageTile) and crushed != dropped:
+            print("ModelFrame (drop): yes sir")
             
-        self.tilePage.draw(page.tiles)
+            if dropped.tile.id[:3] == "top":
+                self.listManager.shiftTopTile(dropped.index, crushed.index)
+            else:
+                # Removes dropped tile from list, inserts dropped tile into crushed tile's position
+                self.listManager.shiftTile(dropped.index, crushed.index)
+        else:
+            match(crushed):
+                case self.nextPageTile:
+                    tiles = self.pageFrame.tiles
+                    # lastIndex = self.pageFrame.tiles[-1]
+                    lastIndex = self.pageFrame.activeTiles[-1]
+                    self.listManager.toNextPage(dropped.index, lastIndex.index)
+                    pass
+                case self.prevPageTile:
+                    firstIndex = self.pageFrame.tiles[0].index
+                    self.listManager.toPrevPage(dropped.index, firstIndex)
+                    pass
+                case self.deleteTile:
+                    # remove tile from list
+                    self.listManager.deleteTile(dropped.tile)
+                    pass
+                case _:
+                    # Reset dropped tile to original position
+                    pass
 
-    def copyTile(self, parent, widget):
-        tile = Tile(
-                    widget.id,
-                    widget.type,
-                    widget.line,
-                    widget.value,
-                    widget.label,
-                   )
-        tile.setParent(parent)
-        parent.mouseManager.addDraggable(tile)
-        parent.mouseManager.addEditable(tile)
-        widget.destroy()
+        self.redraw(self.pageFrame, self.listManager.getPageFirstTile(droppedIndex))
 
 
-        return tile
+
+    def cont(self):
+        self.pageFrameManager.finish()
+
+
+
+    def submitEdit(self, pageTileIndex):
+        self.redraw(self.pageFrame, self.listManager.getPageFirstTile(pageTileIndex))
+
+
+
+    def pageTileSetup(self, parent, tiles: list[PageTile]):
+        
+        for tile in tiles:
+            tile.setParent(parent)
+            self.mouseManager.addDraggable(tile)
+            self.mouseManager.addEditable(tile)
+
+    
+
+    def setMouseManager(self, tile):
+        self.mouseManager.addDraggable(tile)
+        self.mouseManager.addEditable(tile)
+
+
+
