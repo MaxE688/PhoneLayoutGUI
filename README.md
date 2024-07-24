@@ -1,5 +1,6 @@
 # PhoneLayoutGUI
-## This is a utility for configuring the button layouts on these select phone models
+## Description
+This is a utility for configuring the button layouts on these select phone models
   + Aastra 6737i
   + Aastra 6739i
   + Yealink EXP40 Module
