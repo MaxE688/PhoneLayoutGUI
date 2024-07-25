@@ -22,11 +22,11 @@ class PageLayout:
         self.model = model
         self.listManager = listManager
         self.currentPage = 0
-        tileLabels = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
+        pageTiles = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
         self.mouseManager = MouseManager(self)
 
-        self.pageFrame = PageFrame(self.parent, self, tileLabels)
-        self.pageTileSetup(self.pageFrame, tileLabels)
+        self.pageFrame = PageFrame(self.parent, self, pageTiles)
+        self.pageTileSetup(self.pageFrame, pageTiles)
 
         # Draws widgets to PageFrame
         self.modelLayout = self.getModelLayout(model, self.pageFrame)
