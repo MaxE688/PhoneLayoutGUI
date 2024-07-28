@@ -11,11 +11,7 @@ class Root(tk.Tk):
     # Centers self on screen
     def center(self):
         self.update()
-        # print(self.winfo_screenwidth())
-        # print(self.winfo_screenheight())
-        # print(self.winfo_width())
-        # print(self.winfo_height())
-        # print()
+
         screenW = self.winfo_screenwidth()
         screenH = self.winfo_screenheight()
         width = self.winfo_width()
@@ -53,7 +49,6 @@ class Root(tk.Tk):
 
 
 
-    # TODO: Functionality incomplete
     # Go back to window for user to select phone model
     def selectModel(self):
         self.fm.initModelSelectFrame(None)

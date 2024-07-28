@@ -1,7 +1,5 @@
 """
 ToDo:
-
-
     T48 button layout is wrong
 
 """
@@ -14,21 +12,74 @@ from Controller.TileFrameManager import *
 from Controller.ResultsGenerator import ResultsGenerator
 
 class FrameManager:
+    """
+    Controller for managing all of the windows used throughout the process 
+
+    Attributes
+    ----------
+    root : Root
+        The window that contains frames
+    modelSelectFrame : ModelSelectFrame
+        instance of frame used for the model selection step
+    configFrame : ConfigFrame
+        instance of frame used for entering the button layout configuration being edited
+    config : str
+        the configuration string entered by user
+    tileFrameManager : TileFrameManager
+        instance of TileFrameManager controller
+    resultsGenerator : ResultsGenerator
+        instance of ResultsGenerator used to generate the final config string to be copied
+    results : str
+        final string generated for the user
+    model : str
+        model of the phone being edited
+    brand : str
+        brand of the phone being edited
+    
+    Methods
+    -------
+    initModelSelectFrame(frame : ttk.Frame)
+        initiates the Model Select Frame
+    createWindow(frame : ttk.Frame)
+        creates new Root used to contain Frames
+    startLoop()
+        starts the mainloop tkinter relies on
+    initConfigFrame(frame : ttk.Frame, model : str)
+        initiates the Config Frame
+    newConfigFrame(frame : ttk.Frame)
+        creates new Config Frame
+    generateResults(listManager : ListManager)
+        generates the final string
+    resultsFrame()
+        creates the final frame used to display the results
+
+    """
 
     def __init__(self):
         self.root = None
 
-
-    # Creates the window for user to select the model of phone
+    #TODO: Does this need frame parameter?
     def initModelSelectFrame(self, frame):
+        """Creates the window for user to select the model of phone
+
+        Parameters
+        ----------
+        frame : ttk.Frame
+        """
         self.root: Root = self.createWindow(frame)
         self.modelSelectFrame = ModelSelectFrame(self)
         self.root.title(self.modelSelectFrame.title)
         self.root.center()
 
 
-    # Creates new root 
+    
     def createWindow(self, frame):
+        """Creates new root 
+
+        Parameters
+        ----------
+        frame : ttk.Frame
+        """
         if frame != None:
             frame.destroy()
         if self.root != None:
@@ -38,14 +89,21 @@ class FrameManager:
         return root
 
 
-    # Starts the main loop
+
     def startLoop(self):
+        """Starts the main loop"""
         self.root.mainloop()
 
 
     # Creates the window for user to paste button config
     def initConfigFrame(self, frame, model):
-
+        """Creates the frame for user to paste button config
+        
+        Parameters
+        ----------
+        frame : ttk.Frame
+        model : str
+        """
         self.root: Root = self.createWindow(frame)
         self.model = model
         self.brand = phoneModels[model]['brand']
@@ -54,16 +112,29 @@ class FrameManager:
         self.root.title(self.configFrame.title)
         self.root.center()
 
-    
+    #TODO: this can be removed if model parameter in initConfigFrame is made optional
     def newConfigFrame(self, frame):
+        """Creates new config frame for user to paste button config
+
+        Parameters
+        ----------
+        frame : ttk.Frame
+        """
         self.root: Root = self.createWindow(frame)
         self.configFrame = ConfigFrame(self)
         self.root.title(self.configFrame.title)
         self.root.center()
 
 
-    # Create the window for user to edit buttons
+    
     def initPhoneFrame(self, frame, configText):
+        """Create the window for user to edit buttons
+        
+        Parameters
+        ----------
+        frame : ttk.frame
+        configText : str
+        """
         self.root: Root = self.createWindow(frame)
         self.config: str = configText
         self.tileFrameManager = TileFrameManager(self)
@@ -72,14 +143,21 @@ class FrameManager:
         self.root.center()
 
 
-    # Converts the button arrangement to text for final frame
+    
     def generateResults(self, listManager):
+        """Converts the button arrangement to text for final frame
+        
+        Parameters
+        ----------
+        listManager : ListManager
+        """
         self.resultsGenerator = ResultsGenerator(listManager, self.model)
         self.results = self.resultsGenerator.getStrings()
         self.resultsFrame()
 
 
-    # Creates window displaying the text output 
+     
     def resultsFrame(self):
+        """Creates window displaying the text output"""
         self.tileFrameManager.forget()
         self.resultsFrame = ResultsFrame(self.root, self.results)

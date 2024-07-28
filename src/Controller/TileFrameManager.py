@@ -6,8 +6,9 @@ from Model.constants import Model, phoneModels
 from Controller.InitTileConfig import *
 from Controller.ListManager import ListManager
 
+#TODO: Rename this class 
 class TileFrameManager:
-
+    """create tile objects from config string, gives tile objects to list manager"""
     def __init__(self, frameManager):
 
         self.frameManager: FrameManager = frameManager

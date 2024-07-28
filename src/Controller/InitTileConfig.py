@@ -1,12 +1,3 @@
-"""
-TODO:
-    - Implement Yealink models
-
-
-(topsoftkey\d+ \w+: *.* *\d*\n){3,4}\n
-
-
-"""
 
 import re
 from Model.Tile import Tile
@@ -14,8 +5,55 @@ from Model.NewConfiguration import NewConfiguration
 from Model.constants import Brand, Model
 
 class InitTileConfig:
+    """
+    Controller responsible for parsing config string, and creating the tiles
+
+    Attributes
+    ----------
+    model : str
+        model of the phone being edited
+    brand : str
+        brand of the phone being edited
+    cfg : str
+        Config string entered by user
+    btnList : Tile[]
+        list of tiles created from cfg string
+    topBtnGroup : List
+        list of button groups from regex operation
+    exp40Group : List
+        list of button groups from regex operation
+    btnGroup : List
+        list of button groups from regex operation
+    
+    Methods
+    -------
+    getTiles()
+        returns list of tiles generated from config string
+    parseMatch(
+        btnGroups : List, 
+        idR : Pattern[str], 
+        typeR : Pattern[str], 
+        lineR : Pattern[str], 
+        valueR : Pattern[str], 
+        labelR : Patter[str]
+    )
+        parse the config string to build list of tiles
+    fillEmptyTopKeys()
+        Any top keys not included in config string will be created for phone models that use topsoftkeys
+    
+    """
     
     def __init__(self,model, brand, cfg):
+        """
+        Parameters
+        ----------
+        model : str
+            model of phone
+        brand : str
+            brand of phone
+        cfg : str
+            config string entered by user
+        """
    
         self.model = model
         self.brand = brand
@@ -31,6 +69,10 @@ class InitTileConfig:
 
 
     def getTiles(self):
+        """Return list of tiles
+        
+        Returns a list of type Tile generated from config string entered by user
+        """
 
         self.topBtnGroup = None
         self.exp40Group = None
@@ -94,6 +136,10 @@ class InitTileConfig:
 
 
     def parseMatch(self, btnGroups, idR, typeR, lineR, valueR, labelR):
+        """Uses regex to parse through config string
+        
+        Uses regex to parse through config string in order to create tiles
+        """
 
         idNumR = re.compile(r"\d+")
 
@@ -148,6 +194,8 @@ class InitTileConfig:
 
 
     def fillEmptyTopkeys(self):
+        """fills list of topkeys with keys that were not included in config string"""
+
         index = 1
         for i, b in enumerate(self.btnList):
             id = int(b.id[-1])

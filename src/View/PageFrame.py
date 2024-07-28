@@ -29,10 +29,10 @@ class PageFrame(ttk.Frame):
         print("Fetching Model Layout...")
 
 
-    # TODO: ???
-    def redraw(self):
-        # self.layout.redraw(self)
-        pass
+
+    # def redraw(self):
+    #     # self.layout.redraw(self)
+    #     pass
 
 
 

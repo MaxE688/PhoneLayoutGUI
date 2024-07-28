@@ -1,5 +1,4 @@
 import tkinter as tk
-#from Controller.PageFrameManager import PageFrameManager
 from Model.Tile import Tile
 from Model.A37 import A37
 from Model.A39 import A39
@@ -15,18 +14,92 @@ from View.PageFrame import PageFrame
 from Controller.MouseManager import MouseManager
 
 class PageLayout:
+    """
+    Controller for the layout of the current page's frame
+
+    Attributes
+    ----------
+    pageFrameMangager : PageFrameManager
+        instance of controller for this controller
+    parent : ttk.Frame
+        parent of page frame
+    model : str
+        model of the phone being edited 
+    listManager : ListManager
+        perform actions to list of tiles
+    currentPage : int
+        the page number of the current page being viewed
+    mouseManager : MouseManager
+        create mouse event listeners 
+    pageFrame : PageFrame
+        Frame used to display the current page
+    modelLayout : A37 | A39 | EXP40 | T42 | T46 | T48
+        layout of the pages to display, 
+        each possible class represents the layout for the phone model being edited
+    nextPageTile : tk.Label
+        label for the drop area to send tile to next page
+    prevPageTile : tk.Label
+        label for the drop area to send tile to previous page
+    deleteTile : tk.Label
+        labe for the drop area to delete a tile
+    addTile : tk.Button
+        button used to add tiles to the list
+    printBtn : tk.Button
+        prints the frame's children to the console
+
+    Methods
+    -------
+    getModelLayout(model : str, parent: ttk.Frame)
+        creates instance of the appropriate phone model's layout
+    draw(tiles : Tile[])
+        draws tiles to the frame
+    forget()
+        forget self
+    redraw(page: PageFrame, pageFirstIndex : int)
+        update state before drawing again
+    nextPage()
+        displays the next page
+    prevPage()
+        displays the previous page
+    addNewTile()
+        creates a new Tile, and adds it to the list
+    editTile(tile : PageTile)
+        creates instance of EditTileManager
+    drag(widget : ttk.Label | ttk.Button | tk.Frame, x : int, y : int)
+        updates widget's location if widget is a Tile
+    drop(dropped : ttk.Label | ttk.Button | tk.Frame, x : int, y : int)
+        handles tile drop
+    cont()
+        called when self is no longer needed
+    submitEdit(pageTileIndex : int)
+        redraw tiles after an edit
+    pageTileSetup(parent : PageFrame)
+        gives parent to each tile, and binds functions to each tile 
+    setMouseManager(tile : PageTIle)
+        binds functions to the tile passed
+
+    """
 
     def __init__(self, pageFrameManager, tilePageContainerFrame, model: str, listManager:ListManager):
+        """
+        Parameters
+        ----------
+        pageFrameManager : PageFrameManager
+        tilePageContainerFrame : ttk.Frame
+        model : str
+        listManager : ListManager
+        """
+
         self.pageFrameManager = pageFrameManager
         self.parent = tilePageContainerFrame
         self.model = model
         self.listManager = listManager
         self.currentPage = 0
-        tileLabels = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
+        pageTiles = listManager.createPageTiles(0, phoneModels[model]["tilesPerPage"])
         self.mouseManager = MouseManager(self)
 
-        self.pageFrame = PageFrame(self.parent, self, tileLabels)
-        self.pageTileSetup(self.pageFrame, tileLabels)
+        self.pageFrame = PageFrame(self.parent, self, pageTiles)
+        self.pageTileSetup(self.pageFrame, pageTiles)
 
         # Draws widgets to PageFrame
         self.modelLayout = self.getModelLayout(model, self.pageFrame)
@@ -49,6 +122,13 @@ class PageLayout:
 
 
     def getModelLayout(self, model, parent):
+        """returns instance of correct phone model layout
+        
+        Parameters
+        ----------
+        model : str
+        parent : PageFrame
+        """
         match(model):
             case Model.AASTRA_6737.value:
                 return A37(self, parent, self.listManager.topTiles)
@@ -68,6 +148,13 @@ class PageLayout:
 
 
     def draw(self, tiles):
+        """draw widgets to display
+        
+        Parameters
+        ----------
+        tiles : Tile[]
+        """
+
         if self.model == Model.AASTRA_6737.value:
             topTiles = self.listManager.getTopTiles()
             self.modelLayout.draw(tiles, self.listManager.getPageCount(), topTiles )
@@ -77,12 +164,21 @@ class PageLayout:
 
 
     def forget(self):
+        """forgets self"""
         for child in self.pageFrame.winfo_children():
             child.grid_forget()
 
 
 
     def redraw(self, page: PageFrame, pageFirstIndex):
+        """updates state before drawing again
+        
+        Parameters
+        ----------
+        page : PageFrame
+        pageFirstIndex : int
+        """
+
         self.forget()
 
         self.pageFrameManager.updatePageLabel(self.listManager.getPageOfIndex(pageFirstIndex), self.listManager.getPageCount())
@@ -94,6 +190,7 @@ class PageLayout:
 
 
     def nextPage(self):
+        """moves tile to next page"""
         if self.pageFrame.activeTiles:
             nextPageIndex = self.pageFrame.activeTiles[-1].index + 1
         else:
@@ -105,6 +202,7 @@ class PageLayout:
 
 
     def prevPage(self):
+        """moves tile to previous page"""
         prevPageIndex = self.pageFrame.activeTiles[0].index - 1
         if prevPageIndex >= 0:
             prevPageIndex = self.listManager.getPageFirstTile(prevPageIndex)
@@ -114,6 +212,7 @@ class PageLayout:
 
 
     def addNewTile(self):
+        """adds a new tile to the list"""
         print("addNewTile called")
         endTile = self.listManager.tiles[-1]
     
@@ -133,22 +232,47 @@ class PageLayout:
 
 
     def editTile(self, tile):
+        """opens EditTileManager to edit tile passed
+        
+        Parameters
+        ----------
+        tile : Tile
+        """
+
         EditTileManager(self, self.model, tile)
 
 
 
     def drag(self, widget, x, y):
+        """allows tile to be dragged
+        
+        Parameters
+        ----------
+        widget : ttk.Label | ttk.Button | tk.Frame 
+        x : int 
+        y : int
+        """
+
         widget.place(x = x, y = y)
 
 
 
-    def drop(self, dropped, x, y, col, row):
+    def drop(self, dropped, x, y):
+        """handles drop event
+        
+        Parameters
+        ----------
+        dropped : ttk.Label | ttk.Button | tk.Frame 
+        x : int
+        y : int
+        """
+
         droppedIndex = dropped.index
         dropped.place_forget()
         crushed = self.pageFrame.winfo_containing(x, y)
 
         if isinstance(crushed, PageTile) and crushed != dropped:
-            print("ModelFrame (drop): yes sir")
+            print("ModelFrame (drop)")
             
             if dropped.tile.id[:3] == "top":
                 self.listManager.shiftTopTile(dropped.index, crushed.index)
@@ -180,25 +304,47 @@ class PageLayout:
 
 
     def cont(self):
+        """final function call"""
         self.pageFrameManager.finish()
 
 
 
     def submitEdit(self, pageTileIndex):
+        """redraw after an edit is made
+        
+        Parameters
+        ----------
+        pageTileIndex : int
+        """
+
         self.redraw(self.pageFrame, self.listManager.getPageFirstTile(pageTileIndex))
 
 
 
     def pageTileSetup(self, parent, tiles: list[PageTile]):
+        """gives each tile it's parent frame, and binds listeners to each tile
+        
+        Parameters
+        ----------
+        parent : PageFrame
+        tiles : PageTile[]
+        """
         
         for tile in tiles:
             tile.setParent(parent)
-            self.mouseManager.addDraggable(tile)
-            self.mouseManager.addEditable(tile)
+            self.setMouseManager(tile)
+            # self.mouseManager.addDraggable(tile)
+            # self.mouseManager.addEditable(tile)
 
     
 
     def setMouseManager(self, tile):
+        """adds mouse event listeners to the tile passed
+        
+        Parameters
+        ----------
+        tile : PageTile
+        """
         self.mouseManager.addDraggable(tile)
         self.mouseManager.addEditable(tile)
 
