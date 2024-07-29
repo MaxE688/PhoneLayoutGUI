@@ -3,8 +3,38 @@ from Model.Tile import Tile
 from Model.constants import Brand, Model, phoneModels
 
 class ResultsGenerator:
+    """
+    Controller responsible for converting tile objects into output config string
 
+    Attributes
+    ----------
+    strings : str
+        final config string to be output to user
+
+    Methods
+    -------
+    astra(tileList : Tile[])
+        returns list with each element being the configuration of a single button for Aastra phones
+    yealink(tileList : Tile[])
+        returns list with each element being the configuration of a single button for Yealink phones
+    setAastraID(tileList : Tile[])
+        gives each button config string the correct prefix for Aastra phones
+    setYealinkID(tileList : Tile[])
+        gives each button config string the correct prefix for Yealink phones
+    setEXP40ID(tiles : Tile[])
+        gives each button config string the correct prefix for the Yealink EXP40 model
+    getStrings()
+        returns the final output config string
+
+    """
     def __init__(self, listManager: ListManager, model: str):
+        """
+        Parameters
+        ----------
+        listManager : ListManager
+        model : str
+        """
+        
         brand = phoneModels[model]["brand"]
         self.strings = ""
         match(brand):
@@ -27,6 +57,13 @@ class ResultsGenerator:
 
 
     def astra(self, tileList):
+        """Converts tiles to button config strings for Aastra phones
+        
+        Parameters
+        ----------
+        tileList : Tile[]
+        """
+
         buttonStrings = []
 
         for tile in tileList:
@@ -39,6 +76,13 @@ class ResultsGenerator:
 
 
     def yealink(self, tileList):
+        """Converts tiles to button config strings for Yealink phones
+        
+        Parameters
+        ----------
+        tileList : Tile[]
+        """
+
         buttonStrings = []
 
         for tile in tileList:
@@ -53,6 +97,13 @@ class ResultsGenerator:
 
 
     def setAastraID(self, tileList: list[Tile]):
+        """Gives each tile the correct prefix for Aastra phones
+        
+        Parameters
+        ----------
+        tileList : Tile[]
+        """
+
         topKey = 0
         softkey = 0
         for i, tile in enumerate(tileList):
@@ -70,6 +121,13 @@ class ResultsGenerator:
 
 
     def setYealinkID(self, tileList):
+        """Gives each tile the correct prefix for Yealink phones
+        
+        Parameters
+        ----------
+        tileList : Tile[]
+        """
+
         for i, tile in enumerate(tileList):
             key = i+1
             tile.id = "linekey." + str(key)
@@ -77,21 +135,29 @@ class ResultsGenerator:
 
 
     def setEXP40ID(self, tiles):
+        """Gives each tile the correct prefix for Yealink EXP40 side car
+        
+        Parameters
+        ----------
+        tiles : Tile[]
+        """
+
         for i, tile in enumerate(tiles):
             key = i+1
             tile.id = "expansion_module.1.key." + str(key)
 
 
 
-    def makeReturnString(self, buttons):
-        result = ""
-        for button in buttons:
-            result.append(button)
+    # def makeReturnString(self, buttons):
+    #     result = ""
+    #     for button in buttons:
+    #         result.append(button)
 
-        return result
+    #     return result
 
 
 
     def getStrings(self):
-        print("getStrings")
+        """Returns final output config string"""
+    
         return self.strings
