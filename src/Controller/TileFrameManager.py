@@ -1,9 +1,7 @@
 from Controller import FrameManager
 from Controller.PageFrameManager import PageFrameManager
-from View.FooterFrame import FooterFrame
-from View.PageFrame import PageFrame
 from Model.constants import Model, phoneModels
-from Controller.InitTileConfig import *
+from Controller.InitTileConfig import InitTileConfig
 from Controller.ListManager import ListManager
 
 #TODO: Rename this class 
@@ -73,7 +71,7 @@ class TileFrameManager:
 
     def forget(self):
         """forgets child frames"""
-        
+
         self.pageContainer.forget()
 
 
