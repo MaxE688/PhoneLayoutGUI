@@ -3,8 +3,47 @@ import tkinter as tk
 from Model.PageTile import PageTile
 
 class A37:
+    """used to arrange tiles in the layout for the Aastra 6737i
+    
+    Attributes
+    ----------
+    parent : PageFrame
+        parent frame of f1, and f2 frames
+    layoutManager : PageLayout
+        instance of controller that creates model layout class
+    numOfRows : int
+        the number of rows 
+    topTiles : PageTile[]
+        list of top tiles used with Aastra 6737i 
+    f1 : tk.Frame
+        frame that contains toptiles
+    f2 : tk.Frame
+        frame that contains normal tiles
+    
+    Methods
+    -------
+    getTopKeyFrame()
+        returns the frame that contains toptiles (topsoftkeys)
+    getSoftKeys(pageTiles : PageTile[])
+        seperates topsoftkeys from softkeys, and returns list of softkeys
+    drawTopKeys(tiles : PageTile[])
+        places topkeys in their correct position
+    drawKeys(tiles : PageTile[])
+        places keys in their correct position
+    draw(tiles : PageTile[], pageCount : int, topKeys : None | PageTile[])
+        draws all of the page elements 
+
+    """
 
     def __init__(self, layoutManager, parent, topTiles):
+        """
+        Parameters
+        ----------
+        layoutManager : PageLayout
+        parent : PageFrame
+        topTiles : PageTile[]
+        """
+
         self.parent = parent
         self.layoutManager = layoutManager
         self.numOfRows = 6
@@ -19,11 +58,20 @@ class A37:
 
   
     def getTopKeyFrame(self):
+        """return frame that contains topkeys"""
+
         return self.f1
 
 
 
     def getSoftKeys(self, pageTiles):
+        """returns list of all softkeys
+        
+        Parameters
+        ----------
+        pageTiles : PageTile[]
+        """
+
         keys = []
         for page in pageTiles:
             if page.tile.id[0:3] != "top":
@@ -33,6 +81,13 @@ class A37:
 
 
     def drawTopKeys(self, tiles: list[PageTile]):
+        """draws topkeys to window
+        
+        Parameters
+        ----------
+        tiles : PageTile[]
+        """
+
         for i, tile in enumerate(tiles):
             row = i % 3
             if i >= 3:
@@ -45,6 +100,13 @@ class A37:
 
 
     def drawKeys(self, tiles: list[PageTile]):
+        """draws keys to window
+        
+        Parameters
+        ----------
+        tiles : PageTile[]
+        """
+
         for i, tile in enumerate(tiles):
             row = (i % 3) + 3
             if i >= 3:
@@ -56,6 +118,16 @@ class A37:
 
 
     def draw(self, tiles, pageCount, topKeys = None):
+        """draws all of the elements to window
+        
+        Parameters
+        ----------
+        tiles : PageTile[]
+        pageCount : int
+        topKeys : None | PageTile[]
+            Optional parameter
+        """
+
         softkeys = self.getSoftKeys(tiles)
         self.drawTopKeys(topKeys)
         self.drawKeys(softkeys)

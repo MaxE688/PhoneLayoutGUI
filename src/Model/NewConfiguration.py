@@ -1,8 +1,23 @@
 from Model.constants import Brand, Model, phoneModels
 
 class NewConfiguration:
+    """creates config string for when user wants to start without an existing config string
+    
+    Methods
+    -------
+    getString(model : str)
+        returns a config string that is supported by the selected phone model
+
+    """
 
     def getString(model):
+        """returns newly generated config string
+        
+        Parameters
+        ----------
+        model : str
+        """
+
         cfg = ""
         tilesRange = phoneModels[model]['tilesPerPage'] + 1
                 

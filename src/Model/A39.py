@@ -1,9 +1,28 @@
 import tkinter as tk
 
 class A39:
+    """used to arrange tiles in the layout for the Aastra 6739i
+    
+    Attribute
+    ---------
+    layoutManager : PageLayout
+        instance of controller that creates model layout class
+    numOfRows : int
+        the number of rows this model has
+
+    Methods
+    -------
+    draw(tiles : PageTile, PageCount : int)
+        draws all of the page elements
+    """
 
     def __init__(self, layoutManager, parent):
-        self.parent = parent
+        """
+        Parameters
+        ----------
+        layoutManager : PageLayout
+        """
+        #self.parent = parent
         self.layoutManager = layoutManager
         self.numOfRows = 6
         
@@ -14,6 +33,14 @@ class A39:
 
 
     def draw(self, tiles, pageCount):
+        """draws all of thes page element
+        
+        Parameters
+        ----------
+        tiles : PageTile[]
+        pageCount : int
+        """
+
         for i, tile in enumerate(tiles):
             row = i % self.numOfRows
             if i >= self.numOfRows:

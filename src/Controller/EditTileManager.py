@@ -107,9 +107,9 @@ class EditTileManager:
         }
         
         options = self.getTypeOpts()
-        currentOptions = self.getCurrOpt()
+        currentOption = self.getCurrOpt()
 
-        self.editFrame = EditTileFrame(tile, options, currentOptions)
+        self.editFrame = EditTileFrame(tile, options, currentOption)
         self.editFrame.center()
 
         submitBtn = tk.Button(self.editFrame, text = "Submit")

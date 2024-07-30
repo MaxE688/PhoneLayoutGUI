@@ -3,7 +3,58 @@ import tkinter as tk
 from tkinter import StringVar, ttk
 
 class FooterFrame(ttk.Frame):
+    """
+    Frame containing page info, and navigation controls
+
+    Attrubute
+    ---------
+    listManager : ListManager
+        controller keeping track of operations run on main list
+    pageLayout : PageLayout
+        PageLayout is the parent from
+    label : StringVar
+        text in label used to display page info
+    pageControlFrame : tk.Frame
+        frame for page controls (next page, and previous page)
+    buttonFrame : tk.Frame
+        frame for continue and cancel buttons
+    contBtn : tk.Button
+        continue button
+    cancelBtn : tk.Button
+        cancel button
+    nextBtn : tk.Button
+        next page button
+    prevBtn : tk.Button
+        previous page button
+    pageLabel : tk.Label
+        label used to display page info
+
+
+    Methods
+    -------
+    stringify(curr : int, total : int)
+        returns a string with current page info: "current/total"
+    setPageLabel(curr : int, total : int)
+        sets the string var to update the label
+    create()
+        draw all widgets
+    cont()
+        continue on to final step of program
+    nextPage()
+        display the next page
+    prevPage()
+        display the previous page
+
+    """
+
     def __init__(self, container, listManager, pageLayout):
+        """
+        Parameters
+        ----------
+        container : ttk.Frame
+        listManager : ListManager
+        pageLayout : PageLayout
+        """
 
         s = ttk.Style()
         s.configure('Foot.TFrame')
@@ -30,17 +81,38 @@ class FooterFrame(ttk.Frame):
 
 
     def stringify(self, curr, total):
+        """returns string formatted to display current page over total pages
+        
+        Parameters
+        ----------
+        curr : int
+            integer representing the current page being viewed
+        total : int
+            the total number of pages
+        """
+
         return str(curr) + " / " + str(total)
 
 
 
     def setPageLabel(self, curr, total):
+        """sets the string var that updates page label content
+        
+        Parameters
+        ----------
+        curr : int
+            integer representing the current page being viewed
+        total : int
+            the total number of pages
+        """
+
         newLabel = self.stringify(curr, total)
         self.label.set(newLabel)
 
 
 
     def create(self):
+        """draws all of it's widgets"""
         
         self.pack()
         self.grid_rowconfigure(1, weight = 1)
@@ -74,20 +146,28 @@ class FooterFrame(ttk.Frame):
 
 
     def cont(self):
+        """continue to next step of program, display the results"""
+
         self.pageLayout.cont()
 
 
 
     def quit(self):
+        """exit the program"""
+
         sys.exit(0)
 
 
 
     def nextPage(self):
+        """show next page"""
+
         self.pageLayout.nextPage()
 
 
 
     def prevPage(self):
+        """show previous page"""
+
         self.pageLayout.prevPage()
 
