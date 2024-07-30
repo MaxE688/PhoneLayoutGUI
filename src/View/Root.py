@@ -3,6 +3,33 @@ import sys
 import tkinter as tk
 
 class Root(tk.Tk):
+    """
+    Root for the whole program
+
+    Attributes
+    ----------
+    fm : FrameManager
+        Main controller
+
+    Methods
+    -------
+    center()
+        centers self on screen
+    createMenu(fm : FrameManager)
+        creates menu bar
+    newCfg()
+        Go back to config window to set a new config string
+    selectModel()
+        go bakc to select model window to set a new model
+    quit()
+        exit program
+    gridConfigure()
+        configure grid
+
+
+
+
+    """
 
     def __init__(self):
         super().__init__()

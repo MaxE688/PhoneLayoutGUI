@@ -3,8 +3,17 @@ from tkinter import ttk
 
 
 class ResultsFrame(ttk.Frame):
+    """
+    final frame used to display the output config string
+    """
     
     def __init__(self, parent, resultString):
+        """
+        Parameters
+        ----------
+        parent : Root
+        resultsString : str
+        """
 
         super().__init__(parent)
         self.pack()

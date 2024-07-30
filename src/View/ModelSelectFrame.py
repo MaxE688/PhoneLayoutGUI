@@ -4,8 +4,34 @@ from tkinter import ttk
 from Model.constants import phoneModels
 
 class ModelSelectFrame(ttk.Frame):
+    """
+    Frame used to prompt user for the model they would like to edit
+
+    Attributes
+    ----------
+    fm : FrameManager
+        instance of main controller
+    title : str
+        title of window
+    clicked : tk.StringVar
+        keeps track of the option the user has selected
+
+    Methods
+    -------
+    submit()
+        submit phone model, and continue to next window
+    cancel()
+        exit program
+
+
+    """
 
     def __init__(self, fm):
+        """
+        Parameters
+        ----------
+        fm : FrameManager
+        """
 
         super().__init__(fm.root)
 
@@ -39,13 +65,17 @@ class ModelSelectFrame(ttk.Frame):
         tk.Frame(self, width = 20).grid(column = 6, row = 4)
 
 
-    # Event listener for submit button
+
     def submit(self):
+        """Event listener for submit button"""
+
         print(phoneModels[self.clicked.get()])
         self.fm.initConfigFrame(self, self.clicked.get())
 
 
-    # Event listener for cancel button
+
     def cancel(self):
+        """Event listener for cancel button"""
+
         print('cancel')
         sys.exit(0)

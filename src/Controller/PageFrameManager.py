@@ -37,6 +37,7 @@ class PageFrameManager:
         ----------
         tileFrameManager : TileFrameManager
         """
+        
         self.tileFrameManager = tileFrameManager
 
         self.listManager = tileFrameManager.listManager
