@@ -2,8 +2,38 @@ import tkinter as tk
 from tkinter import ttk
 
 class ConfigFrame(ttk.Frame):
+    """
+    Frame for setting initial config string
+
+    Attributes
+    ----------
+    fm : FrameManager
+        instace of main controller
+    title : str
+        title of the window
+    text : tk.Text
+        text widget
+
+
+    Methods
+    -------
+    newConfig()
+        Event listener for New Config button
+    submit()
+        Event listener for Submit button
+    cancel()
+        Event listner for Cancel button
+
+
+    """
     
     def __init__(self, fm):
+        """
+        Parameters
+        ----------
+        fm : FrameManager
+        """
+
         super().__init__(fm.root, padding=(30, 15, 30, 15))
 
         self.fm = fm
@@ -32,14 +62,17 @@ class ConfigFrame(ttk.Frame):
         tk.Frame(self, height = 10).grid(column = 0, row = 3)
 
 
-    # Event listener for New Config button
     def newConfig(self):
+        """Event listener for New Config button"""
+
         print("config Frame new config")
         self.fm.initPhoneFrame(self, "")
 
 
-    # Event listener for submit button
+
     def submit(self):
+        """Event listener for Submit button"""
+        
         cfg = self.text.get("1.0", "end-1c")
         if cfg == "":
             print("MessageBox(\"Cannot submit blank config.\")")
@@ -47,7 +80,9 @@ class ConfigFrame(ttk.Frame):
             self.fm.initPhoneFrame(self, cfg)
 
 
-    # Event listener for cancel button
+
     def cancel(self):
+        """Event listener for Cancel button"""
+        
         print('Config Frame cancel')
         self.fm.selectModelFrame(self)

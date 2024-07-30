@@ -12,6 +12,8 @@ class TileFrameManager:
     ----------
     frameManager : FrameManager
         instance of the main frame manager
+    root : Root
+        reference to root
     model : str
         model of the phone being edited
     currentPage : int
@@ -46,7 +48,7 @@ class TileFrameManager:
         """
 
         self.frameManager: FrameManager = frameManager
-        #self.root = frameManager.root
+        self.root = frameManager.root
         self.model = frameManager.model
         cfg = frameManager.config
         self.currentPage = 0
