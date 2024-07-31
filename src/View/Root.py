@@ -51,7 +51,12 @@ class Root(tk.Tk):
 
  
     def createMenu(self, fm):
-        """Creates the menu bar"""
+        """Creates the menu bar
+        
+        Parameters
+        ----------
+        fm : FrameManager
+        """
 
         self.fm = fm
 
@@ -73,15 +78,15 @@ class Root(tk.Tk):
     def newCfg(self):
         """Go back to window for user to enter new config text"""
 
-        self.fm.newConfigFrame(self.children['!frame'])
-
+        #self.fm.newConfigFrame(self.children['!frame'])
+        self.fm.initConfigFrame(self.children['!frame'])
 
 
 
     def selectModel(self):
         """Go back to window for user to select phone model"""
         
-        self.fm.initModelSelectFrame(None)
+        self.fm.initModelSelectFrame()
 
 
 

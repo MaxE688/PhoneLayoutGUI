@@ -89,9 +89,7 @@ class PageFrame(ttk.Frame):
         self.activeTiles = []
 
         for i, tile in enumerate(tiles):
-            #TODO: why is this 26?
-            if i > 26:
-                pass
+            
             if i >= len(self.tiles): 
                 updatedTile = PageTile(firstIndex + i, tile)
                 updatedTile.setParent(self.pageLayout.pageFrame)

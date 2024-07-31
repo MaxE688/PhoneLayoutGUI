@@ -1,8 +1,3 @@
-"""
-ToDo:
-    T48 button layout is wrong
-
-"""
 from Model.constants import *
 from View.Root import *
 from View.ModelSelectFrame import *
@@ -38,16 +33,16 @@ class FrameManager:
     
     Methods
     -------
-    initModelSelectFrame(frame : ttk.Frame)
+    initModelSelectFrame()
         initiates the Model Select Frame
     createWindow(frame : ttk.Frame)
         creates new Root used to contain Frames
     startLoop()
         starts the mainloop tkinter relies on
+    setModel(model : str)
+        sets model and brand attributes 
     initConfigFrame(frame : ttk.Frame, model : str)
         initiates the Config Frame
-    newConfigFrame(frame : ttk.Frame)
-        creates new Config Frame
     generateResults(listManager : ListManager)
         generates the final string
     resultsFrame()
@@ -58,28 +53,26 @@ class FrameManager:
     def __init__(self):
         self.root = None
 
-    #TODO: Does this need frame parameter?
-    def initModelSelectFrame(self, frame):
-        """Creates the window for user to select the model of phone
+    
+    def initModelSelectFrame(self):
+        """Creates the window for user to select the model of phone"""
 
-        Parameters
-        ----------
-        frame : ttk.Frame
-        """
-        self.root: Root = self.createWindow(frame)
+        self.root: Root = self.createWindow()
         self.modelSelectFrame = ModelSelectFrame(self)
         self.root.title(self.modelSelectFrame.title)
         self.root.center()
 
 
-    
-    def createWindow(self, frame):
+    # TODO: Should mainloop be restarted after root is destroyed
+    #       If so, startLoop() call should come from this function, not Driver.py
+    def createWindow(self, frame = None):
         """Creates new root 
 
         Parameters
         ----------
-        frame : ttk.Frame
+        frame : ttk.Frame | None
         """
+
         if frame != None:
             frame.destroy()
         if self.root != None:
@@ -92,41 +85,38 @@ class FrameManager:
 
     def startLoop(self):
         """Starts the main loop"""
+
         self.root.mainloop()
 
 
-    # Creates the window for user to paste button config
-    def initConfigFrame(self, frame, model):
+    def setModel(self, model):
+        """set model and brand attributes
+        
+        Parameters
+        ----------
+        model : str
+        """
+
+        self.model = model
+        self.brand = phoneModels[model]['brand']
+
+
+
+    def initConfigFrame(self, frame):
         """Creates the frame for user to paste button config
         
         Parameters
         ----------
         frame : ttk.Frame
-        model : str
         """
-        self.root: Root = self.createWindow(frame)
-        self.model = model
-        self.brand = phoneModels[model]['brand']
 
-        self.configFrame = ConfigFrame(self)
-        self.root.title(self.configFrame.title)
-        self.root.center()
-
-    #TODO: this can be removed if model parameter in initConfigFrame is made optional
-    def newConfigFrame(self, frame):
-        """Creates new config frame for user to paste button config
-
-        Parameters
-        ----------
-        frame : ttk.Frame
-        """
         self.root: Root = self.createWindow(frame)
         self.configFrame = ConfigFrame(self)
         self.root.title(self.configFrame.title)
         self.root.center()
 
 
-    
+
     def initPhoneFrame(self, frame, configText):
         """Create the window for user to edit buttons
         
@@ -135,6 +125,7 @@ class FrameManager:
         frame : ttk.frame
         configText : str
         """
+
         self.root: Root = self.createWindow(frame)
         self.config: str = configText
         self.tileFrameManager = TileFrameManager(self)
@@ -151,6 +142,7 @@ class FrameManager:
         ----------
         listManager : ListManager
         """
+
         self.resultsGenerator = ResultsGenerator(listManager, self.model)
         self.results = self.resultsGenerator.getStrings()
         self.resultsFrame()
@@ -159,5 +151,6 @@ class FrameManager:
      
     def resultsFrame(self):
         """Creates window displaying the text output"""
+
         self.tileFrameManager.forget()
         self.resultsFrame = ResultsFrame(self.root, self.results)
