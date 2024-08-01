@@ -25,18 +25,16 @@ class Root(tk.Tk):
         exit program
     gridConfigure()
         configure grid
-
-
-
-
     """
 
     def __init__(self):
         super().__init__()
 
 
-    # Centers self on screen
+    
     def center(self):
+        """Centers self on screen"""
+
         self.update()
 
         screenW = self.winfo_screenwidth()
@@ -51,8 +49,14 @@ class Root(tk.Tk):
         self.geometry(center)
 
 
-    # Creates the menu bar 
+ 
     def createMenu(self, fm):
+        """Creates the menu bar
+        
+        Parameters
+        ----------
+        fm : FrameManager
+        """
 
         self.fm = fm
 
@@ -70,24 +74,32 @@ class Root(tk.Tk):
 
 
     
-    # Go back to window for user to enter new config text
+    
     def newCfg(self):
-        self.fm.newConfigFrame(self.children['!frame'])
+        """Go back to window for user to enter new config text"""
+
+        #self.fm.newConfigFrame(self.children['!frame'])
+        self.fm.initConfigFrame(self.children['!frame'])
 
 
 
-    # Go back to window for user to select phone model
     def selectModel(self):
-        self.fm.initModelSelectFrame(None)
+        """Go back to window for user to select phone model"""
+        
+        self.fm.initModelSelectFrame()
 
 
-    # Exit application
+
     def quit(self):
+        """Exit application"""
+        
         sys.exit(0)
 
 
-    # Configure grid
+
     def gridConfigure(self):
+        """Configure grid"""
+        
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(0, weight = 1)
         self.grid_rowconfigure(1, weight = 1)

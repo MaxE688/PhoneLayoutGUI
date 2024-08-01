@@ -70,7 +70,8 @@ class ModelSelectFrame(ttk.Frame):
         """Event listener for submit button"""
 
         print(phoneModels[self.clicked.get()])
-        self.fm.initConfigFrame(self, self.clicked.get())
+        self.fm.setModel(self.clicked.get())
+        self.fm.initConfigFrame(self)
 
 
 
