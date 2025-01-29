@@ -90,7 +90,7 @@ class PageTile(tk.Label):
 
    # TODO: is this needed?
    def setLabel(self, label):
-      print("set label");
+      print("set label: "+label)
       self.label.set(label)
 
 
