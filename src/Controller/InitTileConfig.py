@@ -103,7 +103,7 @@ class InitTileConfig:
             # labelStr = r".label *= *(?P<label>\w+ *\w*)"
             labelStr = r".label *= *(?P<label>\w+( *\w*)*)"
 
-            exp40Group = re.compile(r"((expansion_module.\d.key.\d+.\w+ *= *.+\n){1,5})\n*") # expansion_module.\d.key.\d+
+            exp40Group = re.compile(r"((expansion_module.\d.key.\d+.\w+ *= *.+\n?){1,5})\n*") # expansion_module.\d.key.\d+
             btnGroupRegx = re.compile(r"((linekey.\d+.\w+ *= *.+\n){1,5})\n*")
 
             self.exp40Group = exp40Group.findall(self.cfg)
