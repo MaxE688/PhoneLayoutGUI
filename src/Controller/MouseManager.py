@@ -135,6 +135,6 @@ class MouseManager:
         print( str(x) + " = " + str(widget.parent.winfo_rootx()) + " + (" + str(widget.winfo_x()) + " + " + str(event.x) + ")")
         print( str(y) + " = " + str(widget.parent.winfo_rooty()) + " + (" + str(widget.winfo_y()) + " + " + str(event.y) + ")")
 
-        self.pageLayout.drop(widget, x, y, self.startCol, self.startRow)
+        self.pageLayout.drop(widget, x, y)
 
 
